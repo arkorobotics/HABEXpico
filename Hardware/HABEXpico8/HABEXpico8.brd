@@ -1702,6 +1702,37 @@ for trimmer refence see : &lt;u&gt;www.electrospec-inc.com/cross_references/trim
 </package3d>
 </packages3d>
 </library>
+<library name="Seeed-Switch" urn="urn:adsk.eagle:library:476">
+<packages>
+<package name="SW4-SMD-5.2X5.2X1.5MM" urn="urn:adsk.eagle:footprint:32979/1" library_version="1">
+<smd name="1" x="-3" y="1.85" dx="1" dy="0.7" layer="1"/>
+<smd name="2" x="3" y="1.85" dx="1" dy="0.7" layer="1"/>
+<smd name="3" x="-3" y="-1.85" dx="1" dy="0.7" layer="1"/>
+<smd name="4" x="3" y="-1.85" dx="1" dy="0.7" layer="1"/>
+<wire x1="2.6" y1="1.4338125" x2="2.6" y2="-1.46863125" width="0.127" layer="21"/>
+<wire x1="2.6" y1="-1.46863125" x2="1.46863125" y2="-2.6" width="0.127" layer="51"/>
+<wire x1="1.5" y1="-2.6" x2="-1.1" y2="-2.6" width="0.127" layer="21"/>
+<wire x1="-1.1" y1="-2.6" x2="-1.459825" y2="-2.6" width="0.127" layer="21"/>
+<wire x1="-1.459825" y1="-2.6" x2="-2.6" y2="-1.459825" width="0.127" layer="51"/>
+<wire x1="-2.6" y1="-1.459825" x2="-2.6" y2="1.395840625" width="0.127" layer="21"/>
+<wire x1="-2.6" y1="1.395840625" x2="-1.395840625" y2="2.6" width="0.127" layer="51"/>
+<wire x1="-1.4" y1="2.6" x2="1.5" y2="2.6" width="0.127" layer="21"/>
+<wire x1="1.4338125" y1="2.6" x2="2.6" y2="1.4338125" width="0.127" layer="51"/>
+<wire x1="-1.4" y1="2.6" x2="-2.4" y2="1.6" width="0.127" layer="21"/>
+<wire x1="1.5" y1="2.6" x2="2.4" y2="1.7" width="0.127" layer="21"/>
+<wire x1="1.5" y1="-2.6" x2="2.4" y2="-1.7" width="0.127" layer="21"/>
+<wire x1="-1.459825" y1="-2.6" x2="-1.5" y2="-2.6" width="0.127" layer="21"/>
+<wire x1="-1.5" y1="-2.6" x2="-2.4" y2="-1.7" width="0.127" layer="21"/>
+<rectangle x1="-2.5" y1="-2.6" x2="2.6" y2="2.6" layer="39"/>
+<text x="-2.3" y="2.8" size="0.889" layer="21" ratio="11">&gt;NAME</text>
+<text x="-1.7" y="-0.1" size="0.635" layer="21" ratio="11">&gt;VALUE</text>
+</package>
+</packages>
+<packages3d>
+<package3d name="SW4-SMD-5.2X5.2X1.5MM" urn="urn:adsk.eagle:package:32992/1" type="box" library_version="1">
+</package3d>
+</packages3d>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -1941,14 +1972,26 @@ design rules under a new name.</description>
 <element name="R5" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" package="0603" package3d_urn="urn:adsk.eagle:package:39650/1" value="100" x="18.796" y="34.163">
 <attribute name="PROD_ID" value="RES-07863" x="18.796" y="34.163" size="1.778" layer="27" display="off"/>
 </element>
-<element name="C9" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" package="0603" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF" x="2.794" y="-1.778">
+<element name="C13" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" package="0603" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF" x="2.794" y="-1.778">
 <attribute name="PROD_ID" value="CAP-08604" x="2.794" y="-1.778" size="1.778" layer="27" display="off"/>
 </element>
 <element name="Y1" library="SparkFun-Clocks" library_urn="urn:adsk.eagle:library:511" package="CRYSTAL-SMD-3.2X1.5MM" package3d_urn="urn:adsk.eagle:package:37548/1" value="ABS07-120-32.768KHZ-T" x="27.051" y="26.924" rot="R90">
 <attribute name="PROD_ID" value="XTAL-13062" x="27.051" y="26.924" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
-<element name="C10" library="rcl" library_urn="urn:adsk.eagle:library:334" package="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="6pF" x="-1.524" y="-5.842"/>
-<element name="C11" library="rcl" library_urn="urn:adsk.eagle:library:334" package="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="6pF" x="-1.524" y="-9.398"/>
+<element name="C9" library="rcl" library_urn="urn:adsk.eagle:library:334" package="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="6pF" x="-1.524" y="-5.842"/>
+<element name="C10" library="rcl" library_urn="urn:adsk.eagle:library:334" package="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="6pF" x="-1.524" y="-9.398"/>
+<element name="C11" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" package="0603" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF" x="-1.524" y="-13.589">
+<attribute name="PROD_ID" value="CAP-08604" x="-1.524" y="-13.589" size="1.778" layer="27" display="off"/>
+</element>
+<element name="SW1" library="Seeed-Switch" library_urn="urn:adsk.eagle:library:476" package="SW4-SMD-5.2X5.2X1.5MM" package3d_urn="urn:adsk.eagle:package:32992/1" value="SKQGADE010" x="0.508" y="-19.304">
+<attribute name="MPN" value="SKQGADE010" x="0.508" y="-19.304" size="1.778" layer="27" display="off"/>
+</element>
+<element name="C12" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" package="0603" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF" x="-1.524" y="-30.607">
+<attribute name="PROD_ID" value="CAP-08604" x="-1.524" y="-23.749" size="1.778" layer="27" display="off"/>
+</element>
+<element name="SW2" library="Seeed-Switch" library_urn="urn:adsk.eagle:library:476" package="SW4-SMD-5.2X5.2X1.5MM" package3d_urn="urn:adsk.eagle:package:32992/1" value="SKQGADE010" x="0.508" y="-26.162">
+<attribute name="MPN" value="SKQGADE010" x="0.508" y="-29.464" size="1.778" layer="27" display="off"/>
+</element>
 </elements>
 <signals>
 <signal name="N$1">
@@ -1999,9 +2042,13 @@ design rules under a new name.</description>
 <contactref element="U2" pad="43"/>
 <contactref element="C8" pad="2"/>
 <contactref element="U3" pad="16"/>
+<contactref element="C13" pad="2"/>
 <contactref element="C9" pad="2"/>
 <contactref element="C10" pad="2"/>
 <contactref element="C11" pad="2"/>
+<contactref element="SW1" pad="4"/>
+<contactref element="C12" pad="2"/>
+<contactref element="SW2" pad="4"/>
 <wire x1="67.183" y1="29.591" x2="61.742" y2="38.624" width="0" layer="19" extent="1-1"/>
 <wire x1="69.303" y1="25.527" x2="67.183" y2="29.591" width="0" layer="19" extent="1-1"/>
 <wire x1="67.603" y1="18.923" x2="69.303" y2="25.527" width="0" layer="19" extent="1-1"/>
@@ -2032,6 +2079,10 @@ design rules under a new name.</description>
 <wire x1="3.644" y1="-1.778" x2="32.228" y2="27.783" width="0" layer="19" extent="1-1"/>
 <wire x1="-0.674" y1="-5.842" x2="3.644" y2="-1.778" width="0" layer="19" extent="1-1"/>
 <wire x1="-0.674" y1="-9.398" x2="-0.674" y2="-5.842" width="0" layer="19" extent="1-1"/>
+<wire x1="-0.674" y1="-13.589" x2="-0.674" y2="-9.398" width="0" layer="19" extent="1-1"/>
+<wire x1="3.508" y1="-21.154" x2="-0.674" y2="-13.589" width="0" layer="19" extent="1-1"/>
+<wire x1="3.508" y1="-28.012" x2="3.508" y2="-21.154" width="0" layer="19" extent="1-1"/>
+<wire x1="-0.674" y1="-30.607" x2="3.508" y2="-28.012" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="2">
 <contactref element="D2" pad="2"/>
@@ -2097,7 +2148,7 @@ design rules under a new name.</description>
 <contactref element="R4" pad="2"/>
 <contactref element="U3" pad="17"/>
 <contactref element="U3" pad="5"/>
-<contactref element="C9" pad="1"/>
+<contactref element="C13" pad="1"/>
 <wire x1="57.892" y1="39.124" x2="61.742" y2="39.124" width="0" layer="19" extent="1-1"/>
 <wire x1="42.303" y1="26.921" x2="57.892" y2="39.124" width="0" layer="19" extent="1-1"/>
 <wire x1="30.138" y1="22.479" x2="42.303" y2="26.921" width="0" layer="19" extent="1-1"/>
@@ -2141,20 +2192,43 @@ design rules under a new name.</description>
 </signal>
 <signal name="MCU_RESET">
 <contactref element="U3" pad="4"/>
+<contactref element="SW1" pad="2"/>
+<contactref element="C11" pad="1"/>
+<wire x1="3.508" y1="-17.454" x2="57.892" y2="39.624" width="0" layer="19" extent="1-1"/>
+<wire x1="-2.374" y1="-13.589" x2="3.508" y2="-17.454" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$6">
 <contactref element="U2" pad="9"/>
 <contactref element="Y1" pad="P$1"/>
-<contactref element="C10" pad="1"/>
+<contactref element="C9" pad="1"/>
 <wire x1="27.051" y1="25.674" x2="30.378" y2="26.483" width="0" layer="19" extent="1-1"/>
 <wire x1="-2.374" y1="-5.842" x2="27.051" y2="25.674" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$7">
 <contactref element="U2" pad="8"/>
 <contactref element="Y1" pad="P$2"/>
-<contactref element="C11" pad="1"/>
+<contactref element="C10" pad="1"/>
 <wire x1="27.051" y1="28.174" x2="30.378" y2="27.133" width="0" layer="19" extent="1-1"/>
 <wire x1="-2.374" y1="-9.398" x2="27.051" y2="28.174" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="MCU_BOOT0">
+<contactref element="U3" pad="1"/>
+<contactref element="SW2" pad="2"/>
+<contactref element="C12" pad="1"/>
+<wire x1="3.508" y1="-24.312" x2="57.792" y2="41.124" width="0" layer="19" extent="1-1"/>
+<wire x1="-2.374" y1="-30.607" x2="3.508" y2="-24.312" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$8">
+<contactref element="U3" pad="3"/>
+</signal>
+<signal name="N$9">
+<contactref element="U3" pad="2"/>
+</signal>
+<signal name="SWDIO">
+<contactref element="U3" pad="21"/>
+</signal>
+<signal name="SWCLK">
+<contactref element="U3" pad="22"/>
 </signal>
 </signals>
 </board>
