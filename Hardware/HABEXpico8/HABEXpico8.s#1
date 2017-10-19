@@ -10124,11 +10124,6 @@ NOTES: THIS PAGE</text>
 <wire x1="317.5" y1="123.19" x2="313.69" y2="129.54" width="0.1524" layer="97"/>
 <text x="342.9" y="6.35" size="2.54" layer="94">ARA KOURCHIANS</text>
 <text x="326.39" y="6.35" size="2.54" layer="94">Engineer: </text>
-<wire x1="27.94" y1="162.56" x2="85.09" y2="162.56" width="0.1524" layer="97" style="shortdash"/>
-<wire x1="85.09" y1="162.56" x2="85.09" y2="105.41" width="0.1524" layer="97" style="shortdash"/>
-<wire x1="85.09" y1="105.41" x2="27.94" y2="105.41" width="0.1524" layer="97" style="shortdash"/>
-<wire x1="27.94" y1="105.41" x2="27.94" y2="162.56" width="0.1524" layer="97" style="shortdash"/>
-<text x="57.15" y="157.48" size="2.54" layer="97" align="bottom-center">GPS BREAKOUT PORT</text>
 </plain>
 <instances>
 <instance part="FRAME2" gate="G$1" x="0" y="0"/>

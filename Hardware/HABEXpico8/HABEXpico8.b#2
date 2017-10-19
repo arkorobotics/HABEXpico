@@ -2400,9 +2400,6 @@ design rules under a new name.</description>
 <element name="R10" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" package="0603" package3d_urn="urn:adsk.eagle:package:39650/1" value="1.33M" x="-36.195" y="-134.112">
 <attribute name="PROD_ID" value=" " x="-36.195" y="-134.112" size="1.778" layer="27" display="off"/>
 </element>
-<element name="J4" library="SparkFun-Connectors" library_urn="urn:adsk.eagle:library:513" package="1X08" package3d_urn="urn:adsk.eagle:package:38138/1" value="" x="-29.464" y="-145.161">
-<attribute name="PROD_ID" value="CONN-08438" x="-29.464" y="-145.161" size="1.778" layer="27" display="off"/>
-</element>
 </elements>
 <signals>
 <signal name="N$1">
@@ -2473,8 +2470,6 @@ design rules under a new name.</description>
 <contactref element="D2" pad="1"/>
 <contactref element="C3" pad="2"/>
 <contactref element="R10" pad="1"/>
-<contactref element="J4" pad="1"/>
-<wire x1="-37.045" y1="-134.112" x2="-29.464" y2="-145.161" width="0" layer="19" extent="1-1"/>
 <wire x1="-35.345" y1="-70.993" x2="-37.045" y2="-134.112" width="0" layer="19" extent="1-1"/>
 <wire x1="-35.345" y1="-67.691" x2="-35.345" y2="-70.993" width="0" layer="19" extent="1-1"/>
 <wire x1="-37.045" y1="-64.389" x2="-35.345" y2="-67.691" width="0" layer="19" extent="1-1"/>
@@ -2605,18 +2600,12 @@ design rules under a new name.</description>
 </signal>
 <signal name="GPS_RX">
 <contactref element="U2" pad="15"/>
-<contactref element="J4" pad="2"/>
-<wire x1="34.178" y1="25.933" x2="-26.924" y2="-145.161" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GPS_TX">
 <contactref element="U2" pad="16"/>
-<contactref element="J4" pad="3"/>
-<wire x1="34.828" y1="25.933" x2="-24.384" y2="-145.161" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GPS_RESET">
 <contactref element="U2" pad="14"/>
-<contactref element="J4" pad="4"/>
-<wire x1="33.528" y1="25.933" x2="-21.844" y2="-145.161" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GPS_VCC">
 <contactref element="U2" pad="21"/>
