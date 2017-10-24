@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="mil" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="yes"/>
@@ -52,7 +52,7 @@
 <layer number="42" name="bRestrict" color="1" fill="10" visible="yes" active="yes"/>
 <layer number="43" name="vRestrict" color="2" fill="10" visible="yes" active="yes"/>
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="yes"/>
-<layer number="45" name="Holes" color="7" fill="1" visible="no" active="yes"/>
+<layer number="45" name="Holes" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="46" name="Milling" color="3" fill="1" visible="no" active="yes"/>
 <layer number="47" name="Measures" color="7" fill="1" visible="no" active="yes"/>
 <layer number="48" name="Document" color="7" fill="1" visible="yes" active="yes"/>
@@ -408,6 +408,7 @@
 <smd name="FEED" x="-3.175" y="0" dx="2" dy="1" layer="1" rot="R90"/>
 <smd name="NC" x="3.925" y="0" dx="2" dy="1" layer="1" rot="R90"/>
 <rectangle x1="-2.065" y1="-0.33" x2="-0.565" y2="0.27" layer="21"/>
+<text x="1.27" y="1.27" size="1.27" layer="21" font="vector">&gt;NAME</text>
 </package>
 <package name="QFN-10_PAD">
 <wire x1="-1.575" y1="1.585" x2="1.57" y2="1.585" width="0.03" layer="51"/>
@@ -612,6 +613,47 @@
 <text x="-1.9812" y="1.3208" size="1.27" layer="21" ratio="6" rot="SR0">*</text>
 <text x="-3.2766" y="-0.635" size="1.27" layer="25" ratio="6" rot="SR0">&gt;Name</text>
 </package>
+<package name="USB-C_R/A_HYBRID_RCPT">
+<pad name="B5" x="0.8" y="0" drill="0.4" diameter="0.6096"/>
+<pad name="B3" x="1.6" y="0" drill="0.4" diameter="0.6096"/>
+<pad name="B2" x="2.4" y="0" drill="0.4" diameter="0.6096"/>
+<pad name="B8" x="-0.8" y="0" drill="0.4" diameter="0.6096"/>
+<pad name="B10" x="-1.6" y="0" drill="0.4" diameter="0.6096"/>
+<pad name="B11" x="-2.4" y="0" drill="0.4" diameter="0.6096"/>
+<pad name="B6" x="0.4" y="0.7" drill="0.4" diameter="0.6096"/>
+<pad name="B7" x="-0.4" y="0.7" drill="0.4" diameter="0.6096"/>
+<pad name="B4" x="1.2" y="0.7" drill="0.4" diameter="0.6096"/>
+<pad name="B9" x="-1.2" y="0.7" drill="0.4" diameter="0.6096"/>
+<pad name="B1" x="2.8" y="0.7" drill="0.4" diameter="0.6096"/>
+<pad name="B12" x="-2.8" y="0.7" drill="0.4" diameter="0.6096"/>
+<pad name="SHL4" x="4.13" y="0.1" drill="0.85" diameter="1.4224" rot="R90"/>
+<pad name="SHL1" x="-4.13" y="0.1" drill="0.85" diameter="1.4224" rot="R90"/>
+<pad name="SHL3" x="4.13" y="-5.85" drill="0.85" diameter="1.27" shape="long" rot="R90"/>
+<pad name="SHL2" x="-4.13" y="-5.85" drill="0.85" diameter="1.27" shape="long" rot="R90"/>
+<hole x="-3.6" y="1.35" drill="0.65"/>
+<hole x="3.6" y="1.35" drill="1"/>
+<smd name="A12" x="2.75" y="2.01" dx="0.7" dy="0.3" layer="1" roundness="25" rot="R90"/>
+<smd name="A11" x="2.25" y="2.01" dx="0.7" dy="0.3" layer="1" roundness="25" rot="R90"/>
+<smd name="A10" x="1.75" y="2.01" dx="0.7" dy="0.3" layer="1" roundness="25" rot="R90"/>
+<smd name="A9" x="1.25" y="2.01" dx="0.7" dy="0.3" layer="1" roundness="25" rot="R90"/>
+<smd name="A8" x="0.75" y="2.01" dx="0.7" dy="0.3" layer="1" roundness="25" rot="R90"/>
+<smd name="A7" x="0.25" y="2.01" dx="0.7" dy="0.3" layer="1" roundness="25" rot="R90"/>
+<smd name="A6" x="-0.25" y="2.01" dx="0.7" dy="0.3" layer="1" roundness="25" rot="R90"/>
+<smd name="A5" x="-0.75" y="2.01" dx="0.7" dy="0.3" layer="1" roundness="25" rot="R90"/>
+<smd name="A4" x="-1.25" y="2.01" dx="0.7" dy="0.3" layer="1" roundness="25" rot="R90"/>
+<smd name="A3" x="-1.75" y="2.01" dx="0.7" dy="0.3" layer="1" roundness="25" rot="R90"/>
+<smd name="A2" x="-2.25" y="2.01" dx="0.7" dy="0.3" layer="1" roundness="25" rot="R90"/>
+<smd name="A1" x="-2.75" y="2.01" dx="0.7" dy="0.3" layer="1" roundness="25" rot="R90"/>
+<wire x1="-4.6" y1="2.5" x2="4.6" y2="2.5" width="0.127" layer="21"/>
+<wire x1="4.6" y1="2.5" x2="4.6" y2="0.9" width="0.127" layer="21"/>
+<wire x1="-4.6" y1="2.5" x2="-4.6" y2="0.9" width="0.127" layer="21"/>
+<wire x1="-4.6" y1="-0.7" x2="-4.6" y2="-4.5" width="0.127" layer="21"/>
+<wire x1="4.6" y1="-0.7" x2="4.6" y2="-4.5" width="0.127" layer="21"/>
+<wire x1="-4.6" y1="-7.2" x2="-4.6" y2="-8" width="0.127" layer="21"/>
+<wire x1="-4.6" y1="-8" x2="4.6" y2="-8" width="0.127" layer="21"/>
+<wire x1="4.6" y1="-8" x2="4.6" y2="-7.2" width="0.127" layer="21"/>
+<text x="-5.4" y="-7.8" size="1.27" layer="25" font="vector" rot="R90">&gt;NAME</text>
+</package>
 </packages>
 <symbols>
 <symbol name="SI4464">
@@ -806,10 +848,12 @@
 <text x="7.62" y="-5.08" size="2.54" layer="96">&gt;VALUE</text>
 </symbol>
 <symbol name="JTI_ANTENNA-1575AT43A40">
-<pin name="FEED" x="-7.62" y="0" visible="pin" length="middle"/>
+<pin name="FEED" x="-7.62" y="0" visible="off" length="middle"/>
 <wire x1="-2.54" y1="0" x2="5.08" y2="0" width="0.254" layer="94"/>
 <wire x1="-2.54" y1="0" x2="5.08" y2="2.54" width="0.254" layer="94"/>
 <wire x1="-2.54" y1="0" x2="5.08" y2="-2.54" width="0.254" layer="94"/>
+<text x="-2.54" y="-5.08" size="1.778" layer="95">&gt;NAME</text>
+<text x="-2.54" y="-7.62" size="1.778" layer="96">&gt;VALUE</text>
 </symbol>
 <symbol name="LTC3105">
 <wire x1="-12.7" y1="11.43" x2="-12.7" y2="-11.43" width="0.254" layer="94"/>
@@ -919,6 +963,39 @@
 <wire x1="53.34" y1="5.08" x2="7.62" y2="5.08" width="0.1524" layer="94"/>
 <text x="25.7556" y="9.1186" size="2.0828" layer="95" ratio="6" rot="SR0">&gt;Name</text>
 <text x="25.1206" y="6.5786" size="2.0828" layer="96" ratio="6" rot="SR0">&gt;Value</text>
+</symbol>
+<symbol name="USB-C">
+<wire x1="0" y1="0" x2="35.56" y2="0" width="0.254" layer="94"/>
+<wire x1="35.56" y1="0" x2="35.56" y2="43.18" width="0.254" layer="94"/>
+<wire x1="35.56" y1="43.18" x2="0" y2="43.18" width="0.254" layer="94"/>
+<wire x1="0" y1="43.18" x2="0" y2="0" width="0.254" layer="94"/>
+<pin name="SHL" x="-5.08" y="5.08" length="middle"/>
+<pin name="A11_SSRXP2" x="-5.08" y="12.7" length="middle"/>
+<pin name="A10_SSRXN2" x="-5.08" y="15.24" length="middle"/>
+<pin name="A9_VBUS" x="-5.08" y="17.78" length="middle"/>
+<pin name="A8_SBU1" x="-5.08" y="20.32" length="middle"/>
+<pin name="A7_DN1" x="-5.08" y="22.86" length="middle"/>
+<pin name="A6_DP1" x="-5.08" y="25.4" length="middle"/>
+<pin name="A5_CC1" x="-5.08" y="27.94" length="middle"/>
+<pin name="A4_VBUS" x="-5.08" y="30.48" length="middle"/>
+<pin name="A3_SSTXN1" x="-5.08" y="33.02" length="middle"/>
+<pin name="A2_SSTXP1" x="-5.08" y="35.56" length="middle"/>
+<pin name="A1_GND" x="-5.08" y="38.1" length="middle"/>
+<pin name="B12_GND" x="40.64" y="38.1" length="middle" rot="R180"/>
+<pin name="B11_SSRXP1" x="40.64" y="35.56" length="middle" rot="R180"/>
+<pin name="B10_SSRXN1" x="40.64" y="33.02" length="middle" rot="R180"/>
+<pin name="B9_VBUS" x="40.64" y="30.48" length="middle" rot="R180"/>
+<pin name="B8_SBU2" x="40.64" y="27.94" length="middle" rot="R180"/>
+<pin name="B7_DN2" x="40.64" y="25.4" length="middle" rot="R180"/>
+<pin name="B6_DP2" x="40.64" y="22.86" length="middle" rot="R180"/>
+<pin name="B5_CC2" x="40.64" y="20.32" length="middle" rot="R180"/>
+<pin name="B4_VBUS" x="40.64" y="17.78" length="middle" rot="R180"/>
+<pin name="B3_SSTXN2" x="40.64" y="15.24" length="middle" rot="R180"/>
+<pin name="B2_SSTXP2" x="40.64" y="12.7" length="middle" rot="R180"/>
+<pin name="A12_GND" x="-5.08" y="10.16" length="middle"/>
+<pin name="B1_GND" x="40.64" y="10.16" length="middle" rot="R180"/>
+<text x="0" y="45.72" size="1.778" layer="95">&gt;NAME</text>
+<text x="0" y="-5.08" size="1.778" layer="96">&gt;VALUE</text>
 </symbol>
 </symbols>
 <devicesets>
@@ -1127,7 +1204,7 @@
 </device>
 </devices>
 </deviceset>
-<deviceset name="JTI_ANTENNA-1575AT43A40">
+<deviceset name="JTI_ANTENNA-1575AT43A40" prefix="X">
 <description>GPS Antenna - SMD</description>
 <gates>
 <gate name="G$1" symbol="JTI_ANTENNA-1575AT43A40" x="17.78" y="-5.08"/>
@@ -1288,6 +1365,48 @@
 <technology name="">
 <attribute name="MANUFACTURER_PART_NUMBER" value="USBLC62SC6" constant="no"/>
 <attribute name="VENDOR" value="ST Microelectronics" constant="no"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="USB-C_R/A_HYBRID" prefix="U" uservalue="yes">
+<description>USB-C Right Angle Hybrid Receptacle</description>
+<gates>
+<gate name="G$1" symbol="USB-C" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="USB-C_R/A_HYBRID_RCPT">
+<connects>
+<connect gate="G$1" pin="A10_SSRXN2" pad="A10"/>
+<connect gate="G$1" pin="A11_SSRXP2" pad="A11"/>
+<connect gate="G$1" pin="A12_GND" pad="A12"/>
+<connect gate="G$1" pin="A1_GND" pad="A1"/>
+<connect gate="G$1" pin="A2_SSTXP1" pad="A2"/>
+<connect gate="G$1" pin="A3_SSTXN1" pad="A3"/>
+<connect gate="G$1" pin="A4_VBUS" pad="A4"/>
+<connect gate="G$1" pin="A5_CC1" pad="A5"/>
+<connect gate="G$1" pin="A6_DP1" pad="A6"/>
+<connect gate="G$1" pin="A7_DN1" pad="A7"/>
+<connect gate="G$1" pin="A8_SBU1" pad="A8"/>
+<connect gate="G$1" pin="A9_VBUS" pad="A9"/>
+<connect gate="G$1" pin="B10_SSRXN1" pad="B10"/>
+<connect gate="G$1" pin="B11_SSRXP1" pad="B11"/>
+<connect gate="G$1" pin="B12_GND" pad="B12"/>
+<connect gate="G$1" pin="B1_GND" pad="B1"/>
+<connect gate="G$1" pin="B2_SSTXP2" pad="B2"/>
+<connect gate="G$1" pin="B3_SSTXN2" pad="B3"/>
+<connect gate="G$1" pin="B4_VBUS" pad="B4"/>
+<connect gate="G$1" pin="B5_CC2" pad="B5"/>
+<connect gate="G$1" pin="B6_DP2" pad="B6"/>
+<connect gate="G$1" pin="B7_DN2" pad="B7"/>
+<connect gate="G$1" pin="B8_SBU2" pad="B8"/>
+<connect gate="G$1" pin="B9_VBUS" pad="B9"/>
+<connect gate="G$1" pin="SHL" pad="SHL1 SHL2 SHL3 SHL4"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="MFG_PN" value="12401548E4#2A" constant="no"/>
 </technology>
 </technologies>
 </device>
