@@ -1,0 +1,35 @@
+* SpiceNetList
+* 
+* Exported from Low_Pass_Filter.sch at 12/3/17 8:40 PM
+* 
+* EAGLE Version 8.4.3 Copyright (c) 1988-2017 Autodesk, Inc.
+* 
+.TEMP=25.000000
+* --------- .OPTIONS ---------
+* --------- .PARAMS ---------
+
+* --------- devices ---------
+V_V1 SOURCE 0 DC 0V AC 3.3V SIN(0 1 1 0 0) 
+C_CM SOURCE 0 4.7pF 
+L_LM ANTENNA SOURCE 12nH 
+R_R1 0 ANTENNA 50 
+C_CM2 ANTENNA 0 7.5pF 
+
+* --------- models ---------
+
+* --------- simulation ---------
+.print DC V(ANTENNA) V(SOURCE) I(V_V1)
+.print AC V(ANTENNA) V(SOURCE) I(V_V1)
+.print TRAN V(ANTENNA) V(SOURCE) I(V_V1)
+.save all
+.END
+
+
+
+
+
+
+
+
+
+

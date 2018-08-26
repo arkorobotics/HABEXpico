@@ -1,10 +1,10 @@
 * SpiceNetList
 * 
-* Exported from L0_C0_Resonant_Tank.sch at 11/4/17 3:15 PM
+* Exported from Low_Pass_Filter.sch at 12/3/17 8:40 PM
 * 
-* EAGLE Version 8.4.1 Copyright (c) 1988-2017 Autodesk, Inc.
+* EAGLE Version 8.4.3 Copyright (c) 1988-2017 Autodesk, Inc.
 * 
-.TEMP=25
+.TEMP=25.0
 
 * --------- .OPTIONS ---------
 .OPTIONS ABSTOL=1e-12 GMIN=1e-12 PIVREL=1e-3 ITL1=100 ITL2=50 PIVTOL=1e-13 RELTOL=1e-3 VNTOL=1e-6 CHGTOL=1e-15 ITL4=10 METHOD=TRAP SRCSTEPS=0 TRTOL=7 NODE
@@ -12,17 +12,18 @@
 * --------- .PARAMS ---------
 
 * --------- devices ---------
-L_L0 TO_MATCH N_4 56nH 
-R_R1 0 TO_MATCH 50 
 V_V1 SOURCE 0 DC 0V AC 3.3V SIN(0 1 1 0 0) 
-C_C0 N_4 SOURCE 22pF 
+C_CM SOURCE 0 4.7pF 
+L_LM ANTENNA SOURCE 12nH 
+R_R1 0 ANTENNA 50 
+C_CM2 ANTENNA 0 7.5pF 
 
 * --------- models ---------
 
 * --------- simulation ---------
 .AC DEC 500 10e6 1800e6 
 
-.print AC VM(TO_MATCH) VM(SOURCE) I(V_V1)
+.print AC VM(ANTENNA) VM(SOURCE) I(V_V1)
 
 .save all
 .END
