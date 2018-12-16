@@ -1,0 +1,2 @@
+cargo:rustc-link-search=/Users/arko/GitHub/HABEXpico/Firmware/src/target/thumbv6m-none-eabi/release/build/habexpico-4d8ae99eeef4772a/out
+cargo:rerun-if-changed=memory.x

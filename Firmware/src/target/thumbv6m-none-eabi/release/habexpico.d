@@ -1,0 +1,1 @@
+/Users/arko/GitHub/HABEXpico/Firmware/src/target/thumbv6m-none-eabi/release/habexpico: /Users/arko/GitHub/HABEXpico/Firmware/src/build.rs /Users/arko/GitHub/HABEXpico/Firmware/src/memory.x /Users/arko/GitHub/HABEXpico/Firmware/src/src/main.rs memory.x

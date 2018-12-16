@@ -1,0 +1,5 @@
+cargo:rustc-cfg=armv6m
+cargo:rustc-link-lib=static=cortex-m-rt
+cargo:rustc-link-search=/Users/arko/GitHub/HABEXpico/Firmware/src/target/thumbv6m-none-eabi/release/build/cortex-m-rt-e1c78a7378d6bd1d/out
+cargo:rerun-if-changed=build.rs
+cargo:rerun-if-changed=link.x.in

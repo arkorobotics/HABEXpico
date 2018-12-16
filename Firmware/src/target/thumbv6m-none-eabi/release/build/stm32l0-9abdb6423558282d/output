@@ -1,0 +1,3 @@
+cargo:rustc-link-search=/Users/arko/GitHub/HABEXpico/Firmware/src/target/thumbv6m-none-eabi/release/build/stm32l0-9abdb6423558282d/out
+cargo:rerun-if-changed=src/stm32l0x1/device.x
+cargo:rerun-if-changed=build.rs

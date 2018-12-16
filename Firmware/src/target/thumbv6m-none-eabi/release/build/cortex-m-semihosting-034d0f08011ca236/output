@@ -1,0 +1,3 @@
+cargo:rustc-link-lib=static=cortex-m-semihosting
+cargo:rustc-link-search=/Users/arko/GitHub/HABEXpico/Firmware/src/target/thumbv6m-none-eabi/release/build/cortex-m-semihosting-034d0f08011ca236/out
+cargo:rustc-cfg=thumb
