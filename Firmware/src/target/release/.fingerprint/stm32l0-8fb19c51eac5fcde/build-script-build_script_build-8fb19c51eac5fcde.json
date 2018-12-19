@@ -1,1 +1,0 @@
-{"rustc":17662650880611125686,"features":"[\"cortex-m-rt\", \"default\", \"rt\", \"stm32l0x1\"]","target":4944179213620976468,"profile":4421507806350405832,"path":1721877591815059147,"deps":[],"local":[{"Precalculated":"0.2.2"}],"rustflags":[],"edition":"Edition2015"}
