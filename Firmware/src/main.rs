@@ -1,28 +1,36 @@
-#![no_std]
+#![deny(unsafe_code)]
 #![no_main]
-#[macro_use(entry,exception)]
-extern crate cortex_m_rt;
+#![no_std]
 
-extern crate cortex_m;
-extern crate cortex_m_semihosting;
 extern crate panic_halt;
 
-extern crate stm32l0;
-use stm32l0::stm32l0x1;
+use cortex_m_rt::entry;
+use stm32l0xx_hal::{pac, prelude::*, rcc::Config};
 
-entry!(main);
-exception!(SysTick, tick);
-
+#[entry]
 fn main() -> ! {
-	let peripherals = stm32l0x1::Peripherals::take().unwrap();
-	let gpioa = &peripherals.GPIOA;
-	gpioa.odr.modify(|_, w| w.od1().set_bit());
-	
-	loop {
-        cortex_m::asm::wfi();
+    let dp = pac::Peripherals::take().unwrap();
+
+    // Configure the clock.
+    let mut rcc = dp.RCC.freeze(Config::hsi16());
+
+    // Acquire the GPIOA peripheral. This also enables the clock for GPIOA in
+    // the RCC register.
+    let gpioa = dp.GPIOA.split(&mut rcc);
+
+    // Configure PA1 as output.
+    let mut led = gpioa.pa1.into_push_pull_output();
+
+    loop {
+        // Set the LED high one million times in a row.
+        for _ in 0..1_000_000 {
+            led.set_high();
+        }
+
+        // Set the LED low one million times in a row.
+        for _ in 0..1_000_000 {
+            led.set_low();
+        }
     }
 }
 
-fn tick() {
-    
-}
