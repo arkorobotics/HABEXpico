@@ -1,3 +1,4 @@
 
 *.lck
 /Firmware/target
+*.s##

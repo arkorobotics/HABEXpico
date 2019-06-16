@@ -8,19 +8,24 @@ name = "habexpico"
 version = "0.0.1"
 
 [dependencies]
+embedded-hal = { version = "0.2.3", features = ["unproven"] }
+cortex-m = {version = "0.5.8", features = ["const-fn"] }
 cortex-m-rt = "0.6.8"
 panic-halt = "0.2.0"
+nb = "0.1.2"
 
 [dependencies.stm32l0xx-hal]
-version = "0.1.4"
+version = "0.1.5"
 features = ["stm32l0x1", "rt"]
 
 [profile.dev]
 codegen-units = 1
 incremental = false
+debug = true
+opt-level = "s"
 
 [profile.release]
-debug = true
-lto = true
 codegen-units = 1
-incremental = false
+lto = true
+debug = true
+opt-level = "s"
