@@ -2,3 +2,4 @@
 *.lck
 /Firmware/target
 *.s##
+Firmware/.gdb_history
