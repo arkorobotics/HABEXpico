@@ -128,7 +128,7 @@ dependencies = [
  "embedded-hal 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "nb 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "panic-halt 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "stm32l0xx-hal 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "stm32l0xx-hal 0.1.7",
 ]
 
 [[package]]
@@ -260,8 +260,7 @@ dependencies = [
 
 [[package]]
 name = "stm32l0xx-hal"
-version = "0.1.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
+version = "0.1.7"
 dependencies = [
  "cast 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "cortex-m 0.5.8 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -344,7 +343,6 @@ dependencies = [
 "checksum semver-parser 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)" = "388a1df253eca08550bef6c72392cfe7c30914bf41df5269b68cbd6ff8f570a3"
 "checksum stable_deref_trait 1.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "dba1a27d3efae4351c8051072d619e3ade2820635c3958d826bfea39d59b54c8"
 "checksum stm32l0 0.7.1 (registry+https://github.com/rust-lang/crates.io-index)" = "8e831bba8dd787feae7b190dece185346e5d10c271589205d33cb9beee75f38f"
-"checksum stm32l0xx-hal 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)" = "4975089122502eb20668ba8ed29c2a7a455479eddaa51cba14d7404f636a5733"
 "checksum syn 0.15.23 (registry+https://github.com/rust-lang/crates.io-index)" = "9545a6a093a3f0bd59adb472700acc08cad3776f860f16a897dfce8c88721cbc"
 "checksum typenum 1.10.0 (registry+https://github.com/rust-lang/crates.io-index)" = "612d636f949607bdf9b123b4a6f6d966dedf3ff669f7f045890d3a4a73948169"
 "checksum unicode-xid 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "fc72304796d0818e357ead4e000d19c9c174ab23dc11093ac919054d20a6a7fc"

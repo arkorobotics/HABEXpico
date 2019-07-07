@@ -15,8 +15,12 @@ cortex-m-rt = "0.6.8"
 panic-halt = "0.2.0"
 nb = "0.1.2"
 
+#[dependencies.stm32l0xx-hal]
+#version = "0.1.7"
+#features = ["stm32l0x1", "rt"]
+
 [dependencies.stm32l0xx-hal]
-version = "0.1.6"
+path = "../../stm32l0xx-hal"
 features = ["stm32l0x1", "rt"]
 
 [profile.dev]

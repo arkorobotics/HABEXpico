@@ -14,19 +14,18 @@ $ ./flash.sh
 
 ## Debug
 
-Terminal 1 - OpenOCD Session:
+1. Terminal 1 - OpenOCD Session:
     ``` 
     $ ./openocd_session.sh
     ```
 
-Terminal 2 - Dashboard:
+2. Terminal 2 - Dashboard:
     ``` 
     $ tty
     ```
     Note the tty session. We will use this in the following steps. (i.e. "/dev/ttys001")
 
-Terminal 3 - GDB Py Session:
+3. Terminal 3 - GDB Py Session:
     ``` 
     $ ./gdb_session.sh target/thumbv6m-none-eabi/release/habexpico -d
-    >>> dashboard -output /dev/ttys001
     ```

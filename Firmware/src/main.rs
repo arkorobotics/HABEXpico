@@ -9,7 +9,7 @@ use cortex_m_rt::entry;
 use stm32l0xx_hal::{pac, prelude::*, rcc::Config, serial};
 //use cortex_m_semihosting::hprintln;
 
-//use core::fmt::Write;
+use core::fmt::Write;
 use nb::block;
 
 #[entry]
@@ -44,8 +44,8 @@ fn main() -> ! {
 
     let (mut debug_tx, mut _debug_rx) = debug_serial.split();
 
-    //writeln!(debug_tx, "- - - HABEX - - -\r").unwrap();
-    //writeln!(debug_tx, "Serial Debug: Configuration complete.\r").unwrap();
+    writeln!(debug_tx, "- - - HABEX - - -\r").unwrap();
+    writeln!(debug_tx, "Serial Debug: Configuration complete.\r").unwrap();
 
     // Configure the GPS serial peripheral
     let gps_serial = dp
@@ -55,10 +55,10 @@ fn main() -> ! {
 
     let (mut _gps_tx, mut gps_rx) = gps_serial.split();
 
-    //writeln!(debug_tx, "GPS: Configuration complete.\r").unwrap();
-
+    writeln!(debug_tx, "GPS: Configuration complete.\r").unwrap();
+    writeln!(debug_tx, "MAIN: Entering main loop.\r").unwrap();
+    
     loop {
-        //writeln!(debug_tx, "MAIN: Entering main loop.\r").unwrap();
         //let _bob = hprintln!("Hello").unwrap();
         // Echo what is received on the serial link
         let received = block!(gps_rx.read()).unwrap();
