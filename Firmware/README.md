@@ -27,5 +27,5 @@ $ ./flash.sh
 
 3. Terminal 3 - GDB Py Session:
     ``` 
-    $ ./gdb_session.sh target/thumbv6m-none-eabi/release/habexpico -d
+    $ ./gdb_session.sh target/thumbv6m-none-eabi/debug/habexpico -d
     ```
