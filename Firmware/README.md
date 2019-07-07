@@ -9,7 +9,7 @@ $ cargo build
 
 1. Generate and Flash Hex File
 ``` 
-$ ./flash.sh
+$ ./flash.sh target/thumbv6m-none-eabi/debug/habexpico
 ```
 
 ## Debug

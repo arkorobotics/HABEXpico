@@ -7,7 +7,6 @@ extern crate panic_halt;
 
 use cortex_m_rt::entry;
 use stm32l0xx_hal::{pac, prelude::*, rcc::Config, serial};
-//use cortex_m_semihosting::hprintln;
 
 use core::fmt::Write;
 use nb::block;
@@ -57,9 +56,8 @@ fn main() -> ! {
 
     writeln!(debug_tx, "GPS: Configuration complete.\r").unwrap();
     writeln!(debug_tx, "MAIN: Entering main loop.\r").unwrap();
-    
+
     loop {
-        //let _bob = hprintln!("Hello").unwrap();
         // Echo what is received on the serial link
         let received = block!(gps_rx.read()).unwrap();
         block!(debug_tx.write(received)).ok();
