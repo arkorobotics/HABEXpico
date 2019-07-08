@@ -6,7 +6,7 @@
 extern crate panic_halt;
 
 use cortex_m_rt::entry;
-use stm32l0xx_hal::{pac, prelude::*, rcc::Config, serial};
+use stm32l0xx_hal::{pac, prelude::*, rcc::Config, serial, spi};
 
 use core::fmt::Write;
 use nb::block;
@@ -44,7 +44,7 @@ fn main() -> ! {
     let (mut debug_tx, mut _debug_rx) = debug_serial.split();
 
     writeln!(debug_tx, "- - - HABEX - - -\r").unwrap();
-    writeln!(debug_tx, "Serial Debug: Configuration complete.\r").unwrap();
+    writeln!(debug_tx, "DEBUG: Serial port configuration complete.\r").unwrap();
 
     // Configure the GPS serial peripheral
     let gps_serial = dp
@@ -54,12 +54,40 @@ fn main() -> ! {
 
     let (mut _gps_tx, mut gps_rx) = gps_serial.split();
 
-    writeln!(debug_tx, "GPS: Configuration complete.\r").unwrap();
+    writeln!(debug_tx, "GPS: Serial port configuration complete.\r").unwrap();
+
+    let mut nss = gpioa.pa4.into_push_pull_output();
+    let sck = gpioa.pa5;
+    let miso = gpioa.pa6;
+    let mosi = gpioa.pa7;
+
+    // Initialise the SPI peripheral.
+    let mut spi = dp
+        .SPI1
+        .spi((sck, miso, mosi), spi::MODE_0, 100_000.hz(), &mut rcc);
+
+    writeln!(debug_tx, "RADIO: SPI configuration complete...\r").unwrap();
+
+    let mut adc = dp.ADC.constrain(&mut rcc);
+
+    // Configure PA0 as analog.
+    let mut vstore_pin = gpioa.pa0.into_analog();
+
+    writeln!(debug_tx, "ADC: Analog configuration complete.\r").unwrap();
+
     writeln!(debug_tx, "MAIN: Entering main loop.\r").unwrap();
 
     loop {
         // Echo what is received on the serial link
         let received = block!(gps_rx.read()).unwrap();
         block!(debug_tx.write(received)).ok();
+
+        nss.set_low().unwrap();
+        spi.write(&[0, 1]).unwrap();
+        nss.set_high().unwrap();
+
+        let vstore: u16 = adc.read(&mut vstore_pin).unwrap();
+
+        writeln!(debug_tx, "ADC: VSTORE={}\r", vstore).unwrap();
     }
 }

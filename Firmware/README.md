@@ -5,14 +5,23 @@
 $ cargo build
 ```
 
-## Flash
+## Dependecies for flashing with UART bootloader
 
-1. Generate and Flash Hex File
-``` 
-$ ./flash.sh target/thumbv6m-none-eabi/debug/habexpico
-```
+1. Download and install the latest `stm32flash`:
+   
+   https://sourceforge.net/p/stm32flash/code/ci/master/tree/
 
-## Debug
+## Flash with UART bootloader
+
+1. Press and hold the RESET and BOOT0 button, release the RESET button, then release the BOOT0 button
+
+2. Program the MCU using the following command:
+    ```
+    $ arm-none-eabi-objcopy -O binary target/thumbv6m-none-eabi/debug/habexpico program.bin
+    $ stm32flash -e 0 -w program.bin -v -g 0x0 /dev/tty.usbserial-A601L0OF
+    ```
+
+## Flash and Debug
 
 1. Terminal 1 - OpenOCD Session:
     ``` 
