@@ -43,7 +43,7 @@ fn main() -> ! {
 
     let (mut debug_tx, mut _debug_rx) = debug_serial.split();
 
-    writeln!(debug_tx, "- - - HABEX - - -\r").unwrap();
+    writeln!(debug_tx, "- - - - HABEX - - - -\r").unwrap();
     writeln!(debug_tx, "DEBUG: Serial port configuration complete.\r").unwrap();
 
     // Configure the GPS serial peripheral
