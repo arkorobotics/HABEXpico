@@ -21,6 +21,13 @@ $ cargo build
     $ stm32flash -e 0 -w program.bin -v -g 0x0 /dev/tty.usbserial-A601L0OF
     ```
 
+## Flash using St-Flash
+
+1. Use the following command:
+    ```
+    $ ./flash.sh target/thumbv6m-none-eabi/debug/habexpico
+    ```
+
 ## Flash and Debug
 
 1. Terminal 1 - OpenOCD Session:
