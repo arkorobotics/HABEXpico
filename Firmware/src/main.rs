@@ -12,20 +12,31 @@ use cortex_m_rt::entry;
 //use core::fmt::Write;
 //use nb::block;
 
+mod console;
 mod gps;
-mod periph;
+mod pal;
 
 #[entry]
 fn main() -> ! {
 
-    let (mut debug_tx, _debug_rx) = periph::setup();
+    let mut pal = pal::PAL::new();
 
-    let mut bob = gps::GPS::new(&mut debug_tx);
-    bob.hello();
+    let mut console = console::CONSOLE::new(&mut pal.console_tx, 
+                                            &mut pal.console_rx);
+
+    console.cprint("- - - - HABEXpico v0.0.1 - - - -\r");
+    console.cprint("Booting...\r");
+
+    let mut gps = gps::GPS::new(&mut pal.gps_tx, 
+                                &mut pal.gps_rx,
+                                &mut pal.gps_en);
+    gps.init();
+    
+    console.cprint("- - - - BOOT COMPLETE - - - -\r");
 
     loop {
         
-        
+        console.print_char(gps.get_packet());
         /*
         // Echo what is received on the serial link
         let received = block!(gps_rx.read()).unwrap();
