@@ -7,14 +7,14 @@
 extern crate panic_halt;
 
 use cortex_m_rt::entry;
-//use stm32l0xx_hal::{pac, prelude::*, rcc::Config, serial, spi};
 
-//use core::fmt::Write;
 //use nb::block;
 
 mod console;
 mod gps;
 mod pal;
+mod power;
+mod radio;
 
 #[entry]
 fn main() -> ! {
@@ -32,23 +32,23 @@ fn main() -> ! {
                                 &mut pal.gps_en);
     gps.init();
     
+    let mut radio = radio::RADIO::new(&mut pal.radio_spi,
+                                      &mut pal.radio_nss);
+    
+    radio.init();
+
+    let mut power = power::POWER::new(&mut pal.adc,
+                                      &mut pal.adc_vstore);
+
     console.cprint("- - - - BOOT COMPLETE - - - -\r");
+
+    let vstore = power.read_vstore();
+
+    console.cprint_telem("ADC: VSTORE=", vstore);
 
     loop {
         
         console.print_char(gps.get_packet());
-        /*
-        // Echo what is received on the serial link
-        let received = block!(gps_rx.read()).unwrap();
-        block!(debug_tx.write(received)).ok();
-
-        nss.set_low().unwrap();
-        spi.write(&[0, 1]).unwrap();
-        nss.set_high().unwrap();
-
-        let vstore: u16 = adc.read(&mut vstore_pin).unwrap();
-
-        writeln!(debug_tx, "ADC: VSTORE={}\r", vstore).unwrap();
-        */
+        
     }
 }

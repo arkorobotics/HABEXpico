@@ -25,6 +25,10 @@ impl<'a> CONSOLE<'a> {
         writeln!(self.console_tx, "{}", s).unwrap();
     }
 
+    pub fn cprint_telem(&mut self, s: &str, c: u16) -> () {
+        writeln!(self.console_tx, "{}{}\r", s, c).unwrap();
+    }
+
     pub fn print_char(&mut self, c: u8) -> () {
         block!(self.console_tx.write(c)).ok();
     }
