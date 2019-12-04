@@ -1,5 +1,5 @@
 #![deny(warnings)]
-#![deny(unsafe_code)]
+//#![deny(unsafe_code)]
 #![no_main]
 #![no_std]
 
@@ -49,6 +49,6 @@ fn main() -> ! {
     loop {
         
         console.print_char(gps.get_packet());
-        
+        console.cprint_telem("Time=", pal::get_time());
     }
 }
