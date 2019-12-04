@@ -1,14 +1,6 @@
 // Peripheral Abstraction Layer
 
-use core::ops::DerefMut;
-use core::cell::RefCell;
-use cortex_m::interrupt::Mutex;
-use cortex_m::peripheral::NVIC;
-
-use stm32l0xx_hal::{pac::{self, interrupt, Interrupt}, prelude::*, rcc::Config, adc, gpio, serial, spi, timer::Timer};
-
-static TIME: Mutex<RefCell<Option<u16>>> = Mutex::new(RefCell::new(None));
-static TIMER: Mutex<RefCell<Option<Timer<pac::TIM2>>>> = Mutex::new(RefCell::new(None));
+use stm32l0xx_hal::{pac, prelude::*, rcc::Config, adc, gpio, serial, spi, timer::*};
 
 static mut BOB: u16 = 0;
 
@@ -24,10 +16,11 @@ pub struct PAL {
     pub radio_nss: gpio::gpioa::PA4<gpio::Output<gpio::PushPull>>,  // Radio Chip Select Pin
     pub adc: adc::Adc,                                              // Analog To Digital Converter
     pub adc_vstore: gpio::gpioa::PA0<gpio::Analog>,                 // Storage Voltage
+    pub timer: Timer<pac::TIM2>,
 }
 
 impl PAL {
-    pub fn new() -> PAL {
+    pub fn new() -> Self {
         // Create Peripheral Struct
         let dp = pac::Peripherals::take().unwrap();
 
@@ -83,20 +76,7 @@ impl PAL {
         let adc_vstore = gpioa.pa0.into_analog();
 
         // Configure the timer.
-        let mut timer = dp.TIM2.timer(1.hz(), &mut rcc);
-        timer.listen();
-
-        let time: u16 = 0;
-        
-        // Store the LED and timer in mutex refcells to make them available from the
-        // timer interrupt.
-        cortex_m::interrupt::free(|cs| {
-            *TIME.borrow(cs).borrow_mut() = Some(time);
-            *TIMER.borrow(cs).borrow_mut() = Some(timer);
-        });
-
-        // Enable the timer interrupt in the NVIC.
-        unsafe { NVIC::unmask(Interrupt::TIM2); }
+        let timer = dp.TIM2.timer(1.hz(), &mut rcc);
 
         return PAL {
             console_tx: console_tx,
@@ -108,40 +88,12 @@ impl PAL {
             radio_nss: radio_nss,
             adc: adc,
             adc_vstore: adc_vstore,
+            timer: timer
         }
     }
 }
 
 pub fn get_time() -> u16 {
-    cortex_m::interrupt::free(|cs| {
-        if let Some(ref mut _time) = TIME.borrow(cs).borrow_mut().deref_mut() {
-            unsafe { let hello = BOB; return hello; }
-        }
-        return 0;
-    });
-    return 0;
+    unsafe { return BOB; }
 }
 
-#[interrupt]
-fn TIM2() {
-    // Keep a state to blink the LED.
-    static mut STATE: bool = false;
-    unsafe { BOB = BOB + 1};
-    cortex_m::interrupt::free(|cs| {
-        if let Some(ref mut timer) = TIMER.borrow(cs).borrow_mut().deref_mut() {
-            // Clear the interrupt flag.
-            timer.clear_irq();
-
-            if let Some(ref mut time) = TIME.borrow(cs).borrow_mut().deref_mut() {
-                
-                *time = *time + 1;
-
-                if *STATE {
-                    *STATE = false;
-                } else {
-                    *STATE = true;
-                }
-            }
-        }
-    });
-}

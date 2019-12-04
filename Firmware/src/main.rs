@@ -3,6 +3,14 @@
 #![no_main]
 #![no_std]
 
+use stm32l0xx_hal::{pac::{self, interrupt, Interrupt}, timer::Timer};
+
+use core::ops::DerefMut;
+use core::cell::RefCell;
+use cortex_m::interrupt::Mutex;
+use cortex_m::peripheral::NVIC;
+
+static TIMER: Mutex<RefCell<Option<Timer<pac::TIM2>>>> = Mutex::new(RefCell::new(None));
 
 extern crate panic_halt;
 
@@ -46,9 +54,31 @@ fn main() -> ! {
 
     console.cprint_telem("ADC: VSTORE=", vstore);
 
-    loop {
+    pal.timer.listen();
         
-        console.print_char(gps.get_packet());
+    // Store timer in mutex refcells to make them available from the
+    // timer interrupt.
+    cortex_m::interrupt::free(|cs| {
+        *TIMER.borrow(cs).borrow_mut() = Some(pal.timer);
+    });
+    
+    // Enable the timer interrupt in the NVIC.
+    unsafe { NVIC::unmask(Interrupt::TIM2); }
+
+
+    loop {
+
         console.cprint_telem("Time=", pal::get_time());
+    
     }
+}
+
+#[interrupt]
+fn TIM2() {
+    cortex_m::interrupt::free(|cs| {
+        if let Some(ref mut timer) = TIMER.borrow(cs).borrow_mut().deref_mut() {
+            // Clear the interrupt flag.
+            timer.clear_irq();
+        }
+    });
 }
