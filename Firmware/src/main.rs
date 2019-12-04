@@ -53,13 +53,17 @@ fn main() -> ! {
     let vstore = power.read_vstore();
 
     console.cprint_telem("ADC: VSTORE=", vstore);
+    
+    console.print_char(gps.get_packet());
 
-    pal.timer.listen();
+    let mut timer: Timer<pac::TIM2> = pal.timer;
+
+    timer.listen();
         
     // Store timer in mutex refcells to make them available from the
     // timer interrupt.
     cortex_m::interrupt::free(|cs| {
-        *TIMER.borrow(cs).borrow_mut() = Some(pal.timer);
+        *TIMER.borrow(cs).borrow_mut() = Some(timer);
     });
     
     // Enable the timer interrupt in the NVIC.
