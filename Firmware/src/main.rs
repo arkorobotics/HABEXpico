@@ -10,7 +10,7 @@ use core::cell::RefCell;
 use cortex_m::interrupt::Mutex;
 use cortex_m::peripheral::NVIC;
 
-static TIMER: Mutex<RefCell<Option<Timer<pac::TIM21>>>> = Mutex::new(RefCell::new(None));
+static TIMER: Mutex<RefCell<Option<Timer<pac::TIM2>>>> = Mutex::new(RefCell::new(None));
 static ST: Mutex<RefCell<Option<u16>>> = Mutex::new(RefCell::new(None));
 
 extern crate panic_halt;
@@ -57,12 +57,13 @@ fn main() -> ! {
     
     console.print_char(gps.get_packet());
 
-    let mut timer: Timer<pac::TIM21> = pal.timer;
+    let mut timer: Timer<pac::TIM2> = pal.timer;
 
     timer.listen();
     
-    let st: u16 = 0;
-
+    let mut st: u16 = 0;
+    st = st + 2;
+    
     // Store timer in mutex refcells to make them available from the
     // timer interrupt.
     cortex_m::interrupt::free(|cs| {
@@ -70,23 +71,30 @@ fn main() -> ! {
         *TIMER.borrow(cs).borrow_mut() = Some(timer);
     });
     
+   
     // Enable the timer interrupt in the NVIC.
-    unsafe { NVIC::unmask(Interrupt::TIM21); }
+    unsafe { NVIC::unmask(Interrupt::TIM2); }
 
     
     loop {
-
-        console.cprint_telem("Time=", st);
-    
+        cortex_m::interrupt::free(|cs| {
+            if let Some(ref mut st) = ST.borrow(cs).borrow_mut().deref_mut() {    
+                console.cprint_telem("Time=", *st);
+            }
+        });
     }
 }
 
 #[interrupt]
-fn TIM21() {
+fn TIM2() {
     cortex_m::interrupt::free(|cs| {
         if let Some(ref mut timer) = TIMER.borrow(cs).borrow_mut().deref_mut() {
             // Clear the interrupt flag.
             timer.clear_irq();
+
+            if let Some(ref mut st) = ST.borrow(cs).borrow_mut().deref_mut() {
+                *st = *st + 1;
+            }
         }
     });
 }

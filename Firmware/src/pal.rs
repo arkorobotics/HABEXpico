@@ -14,7 +14,7 @@ pub struct PAL {
     pub radio_nss: gpio::gpioa::PA4<gpio::Output<gpio::PushPull>>,  // Radio Chip Select Pin
     pub adc: adc::Adc,                                              // Analog To Digital Converter
     pub adc_vstore: gpio::gpioa::PA0<gpio::Analog>,                 // Storage Voltage
-    pub timer: Timer<pac::TIM21>,
+    pub timer: Timer<pac::TIM2>,
 }
 
 impl PAL {
@@ -74,7 +74,7 @@ impl PAL {
         let adc_vstore = gpioa.pa0.into_analog();
 
         // Configure the timer.
-        let timer = dp.TIM21.timer(10.hz(), &mut rcc);
+        let timer = dp.TIM2.timer(1.hz(), &mut rcc);
 
         return PAL {
             console_tx: console_tx,
