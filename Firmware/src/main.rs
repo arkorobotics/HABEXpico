@@ -49,40 +49,44 @@ fn main() -> ! {
     let mut power = power::POWER::new(&mut pal.adc,
                                       &mut pal.adc_vstore);
 
-    console.cprint("- - - - BOOT COMPLETE - - - -\r");
-
     let vstore = power.read_vstore();
 
     console.cprint_telem("ADC: VSTORE=", vstore);
     
+    // Remove Before Flight
     console.print_char(gps.get_packet());
 
+    // Setup Timekeeper
     let mut timer: Timer<pac::TIM2> = pal.timer;
 
     timer.listen();
     
-    let mut st: u16 = 0;
-    st = st + 1;
+    let mut stime: u16 = 0;
+    stime = stime + 1;          // Start time at 1. Any time value less than 1 means there was an error.
     
-    // Store timer in mutex refcells to make them available from the
-    // timer interrupt.
     cortex_m::interrupt::free(|cs| {
-        *ST.borrow(cs).borrow_mut() = Some(st);
+        *ST.borrow(cs).borrow_mut() = Some(stime);
         *TIMER.borrow(cs).borrow_mut() = Some(timer);
     });
     
-   
-    // Enable the timer interrupt in the NVIC.
-    unsafe { NVIC::unmask(Interrupt::TIM2); }
+    unsafe { NVIC::unmask(Interrupt::TIM2); }  // Enable the timer interrupt in the NVIC.
 
-    
+    console.cprint("- - - - BOOT COMPLETE - - - -\r");
+
     loop {
-        cortex_m::interrupt::free(|cs| {
-            if let Some(ref mut st) = ST.borrow(cs).borrow_mut().deref_mut() {    
-                console.cprint_telem("Time=", *st);
-            }
-        });
+        console.cprint_telem("Time=", get_time());
     }
+}
+
+fn get_time() -> u16 {
+    let mut current_time: u16 = 0;
+    cortex_m::interrupt::free(|cs| {
+        if let Some(ref mut stime) = ST.borrow(cs).borrow_mut().deref_mut() {    
+            current_time = *stime;
+        }
+        return current_time;
+    });
+    return current_time;
 }
 
 #[interrupt]
