@@ -62,7 +62,7 @@ fn main() -> ! {
     timer.listen();
     
     let mut st: u16 = 0;
-    st = st + 2;
+    st = st + 1;
     
     // Store timer in mutex refcells to make them available from the
     // timer interrupt.
