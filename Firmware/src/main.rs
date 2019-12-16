@@ -1,29 +1,29 @@
-#![deny(warnings)]
+//#![deny(warnings)]
 //#![deny(unsafe_code)]
 #![no_main]
 #![no_std]
 
 use stm32l0xx_hal::{pac::{self, interrupt, Interrupt}, timer::Timer};
 
+extern crate panic_halt;
+
+//use core::str;
 use core::ops::DerefMut;
 use core::cell::RefCell;
 use cortex_m::interrupt::Mutex;
 use cortex_m::peripheral::NVIC;
-
-static TIMER: Mutex<RefCell<Option<Timer<pac::TIM2>>>> = Mutex::new(RefCell::new(None));
-static ST: Mutex<RefCell<Option<u16>>> = Mutex::new(RefCell::new(None));
-
-extern crate panic_halt;
-
 use cortex_m_rt::entry;
-
-//use nb::block;
 
 mod console;
 mod gps;
 mod pal;
 mod power;
 mod radio;
+
+static TIMER: Mutex<RefCell<Option<Timer<pac::TIM2>>>> = Mutex::new(RefCell::new(None));
+static ST: Mutex<RefCell<Option<u16>>> = Mutex::new(RefCell::new(None));
+
+use nb::block;
 
 #[entry]
 fn main() -> ! {
@@ -33,8 +33,8 @@ fn main() -> ! {
     let mut console = console::CONSOLE::new(&mut pal.console_tx, 
                                             &mut pal.console_rx);
 
-    console.cprint("- - - - HABEXpico v0.0.1 - - - -\r");
-    console.cprint("Booting...\r");
+    //console.cprint("- - - - HABEXpico v0.0.1 - - - -\r");
+    //console.cprint("Booting...\r");
 
     let mut gps = gps::GPS::new(&mut pal.gps_tx, 
                                 &mut pal.gps_rx,
@@ -51,10 +51,7 @@ fn main() -> ! {
 
     let vstore = power.read_vstore();
 
-    console.cprint_telem("ADC: VSTORE=", vstore);
-    
-    // Remove Before Flight
-    console.print_char(gps.get_packet());
+    //console.cprint_telem("ADC: VSTORE=", vstore);
 
     // Setup Timekeeper
     let mut timer: Timer<pac::TIM2> = pal.timer;
@@ -71,10 +68,16 @@ fn main() -> ! {
     
     unsafe { NVIC::unmask(Interrupt::TIM2); }  // Enable the timer interrupt in the NVIC.
 
-    console.cprint("- - - - BOOT COMPLETE - - - -\r");
+    //console.cprint("- - - - BOOT COMPLETE - - - -\r");
+
+    
+    let mut packet: [u8; 100] = [0; 100];
 
     loop {
-        console.cprint_telem("Time=", get_time());
+        gps.get_packet(&mut packet);
+        console.cprint(packet);
+        // Remove Before Flight
+        //console.cprint_telem("Time (s) = ", get_time());
     }
 }
 

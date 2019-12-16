@@ -1,8 +1,13 @@
 ## Build
 
-1. Build command
+1. Build command for debug
 ```
 $ cargo build
+```
+
+2. Build command for release
+```
+$ cargo build --release
 ```
 
 ## Dependecies for flashing with UART bootloader
@@ -23,9 +28,14 @@ $ cargo build
 
 ## Flash using St-Flash
 
-1. Use the following command:
+1. Use the following command to flash the debug build:
     ```
     $ ./flash.sh target/thumbv6m-none-eabi/debug/habexpico
+    ```
+
+2. Use the following command to flash the release build:
+    ```
+    $ ./flash.sh
     ```
 
 ## Flash and Debug

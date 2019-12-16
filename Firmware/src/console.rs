@@ -1,9 +1,10 @@
-#![deny(warnings)]
+//#![deny(warnings)]
 #![deny(unsafe_code)]
 
 use stm32l0xx_hal::{prelude::*, serial};
+//use stm32l0xx_hal::{prelude::*, serial};
 
-use core::fmt::Write;
+//use core::fmt::Write;
 use nb::block;
 
 pub struct CONSOLE<'a> {
@@ -21,15 +22,22 @@ impl<'a> CONSOLE<'a> {
         }
     }
 
-    pub fn cprint(&mut self, s: &str) -> () {
-        writeln!(self.console_tx, "{}", s).unwrap();
+    
+    pub fn cprint(&mut self, packet: [u8; 100] ) -> () {
+        for i in 0..99 {
+            block!(self.console_tx.write(packet[i])).ok();
+        }
+        
+        //writeln!(self.console_tx, "{}", s).unwrap();
     }
-
+    
+    /*
     pub fn cprint_telem(&mut self, s: &str, c: u16) -> () {
         writeln!(self.console_tx, "{}{}\r", s, c).unwrap();
     }
-
+    
     pub fn print_char(&mut self, c: u8) -> () {
         block!(self.console_tx.write(c)).ok();
     }
+    */
 }
