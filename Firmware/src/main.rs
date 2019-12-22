@@ -7,7 +7,6 @@ use stm32l0xx_hal::{pac::{self, interrupt, Interrupt}, timer::Timer};
 
 extern crate panic_halt;
 
-//use core::str;
 use core::ops::DerefMut;
 use core::cell::RefCell;
 use cortex_m::interrupt::Mutex;
@@ -16,6 +15,7 @@ use cortex_m_rt::entry;
 
 mod console;
 mod gps;
+mod nfmt;
 mod pal;
 mod power;
 mod radio;
@@ -23,17 +23,17 @@ mod radio;
 static TIMER: Mutex<RefCell<Option<Timer<pac::TIM2>>>> = Mutex::new(RefCell::new(None));
 static ST: Mutex<RefCell<Option<u16>>> = Mutex::new(RefCell::new(None));
 
-use nb::block;
-
 #[entry]
 fn main() -> ! {
+
+    let mut msg: [u8; 100] = [0; 100];
 
     let mut pal = pal::PAL::new();
 
     let mut console = console::CONSOLE::new(&mut pal.console_tx, 
                                             &mut pal.console_rx);
 
-    //console.cprint("- - - - HABEXpico v0.0.1 - - - -\r");
+    console.sprint("- - - - HABEXpico v0.0.1 - - - -\r\n");
     //console.cprint("Booting...\r");
 
     let mut gps = gps::GPS::new(&mut pal.gps_tx, 
@@ -70,12 +70,11 @@ fn main() -> ! {
 
     //console.cprint("- - - - BOOT COMPLETE - - - -\r");
 
-    
-    let mut packet: [u8; 100] = [0; 100];
-
     loop {
-        gps.get_packet(&mut packet);
-        console.cprint(packet);
+        let nmea = gps.get_packet();
+        let s = nfmt::u16_to_string(nmea.x);
+        console.cprint(&s);
+        console.sprint("- - - -\r\n");
         // Remove Before Flight
         //console.cprint_telem("Time (s) = ", get_time());
     }

@@ -5,6 +5,7 @@ use stm32l0xx_hal::{prelude::*, serial};
 //use stm32l0xx_hal::{prelude::*, serial};
 
 //use core::fmt::Write;
+
 use nb::block;
 
 pub struct CONSOLE<'a> {
@@ -22,13 +23,16 @@ impl<'a> CONSOLE<'a> {
         }
     }
 
-    
-    pub fn cprint(&mut self, packet: [u8; 100] ) -> () {
-        for i in 0..99 {
+    pub fn sprint(&mut self, s: &str) -> () {
+        for c in s.chars() { 
+            block!(self.console_tx.write(c as u8)).ok();
+        }
+    }
+
+    pub fn cprint(&mut self, packet: &[u8] ) -> () {
+        for i in 0..packet.len() {
             block!(self.console_tx.write(packet[i])).ok();
         }
-        
-        //writeln!(self.console_tx, "{}", s).unwrap();
     }
     
     /*

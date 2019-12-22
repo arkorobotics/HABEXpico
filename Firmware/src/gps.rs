@@ -1,11 +1,13 @@
-#![deny(warnings)]
+//#![deny(warnings)]
 #![deny(unsafe_code)]
 
 use stm32l0xx_hal::{prelude::*, gpio, serial};
 
-
 use nb::block;
-//use nmea::Nmea;
+
+pub struct NMEA {
+    pub x: u16,
+}
 
 pub struct GPS<'a> {
     pub gps_tx: &'a mut serial::Tx<serial::LPUART1>,
@@ -29,8 +31,9 @@ impl<'a> GPS<'a> {
         let _gps_err = self.gps_en.set_low();
     }
 
-    pub fn get_packet(&mut self, packet: &mut [u8]) -> () {
+    pub fn get_packet(&mut self) -> NMEA {
 
+        let mut packet: [u8; 100] = [0; 100];
         let mut gga_valid: u8 = 0;
 
         for i in 0..100 {
@@ -60,10 +63,10 @@ impl<'a> GPS<'a> {
             if packet[i] == ('\n' as u8) { break; }
         }
 
-        //let mut nmea= Nmea::new();
-        //nmea.parse(packet).unwrap();
+        // Parse NMEA Packet
+        // let lat = s.parse::<i32>().unwrap();
 
-        //return 'M' as u8;
-        
+        let nmea: NMEA = NMEA { x: 589 };
+        return nmea;
     }
 }
