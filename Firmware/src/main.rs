@@ -21,7 +21,7 @@ mod power;
 mod radio;
 
 static TIMER: Mutex<RefCell<Option<Timer<pac::TIM2>>>> = Mutex::new(RefCell::new(None));
-static ST: Mutex<RefCell<Option<u16>>> = Mutex::new(RefCell::new(None));
+static ST: Mutex<RefCell<Option<u32>>> = Mutex::new(RefCell::new(None));
 
 #[entry]
 fn main() -> ! {
@@ -33,8 +33,7 @@ fn main() -> ! {
     let mut console = console::CONSOLE::new(&mut pal.console_tx, 
                                             &mut pal.console_rx);
 
-    console.sprint("- - - - HABEXpico v0.0.1 - - - -\r\n");
-    //console.cprint("Booting...\r");
+    console.sprintln("- - - - HABEXpico v0.0.1 - - - -");
 
     let mut gps = gps::GPS::new(&mut pal.gps_tx, 
                                 &mut pal.gps_rx,
@@ -51,14 +50,12 @@ fn main() -> ! {
 
     let vstore = power.read_vstore();
 
-    //console.cprint_telem("ADC: VSTORE=", vstore);
-
     // Setup Timekeeper
     let mut timer: Timer<pac::TIM2> = pal.timer;
 
     timer.listen();
     
-    let mut stime: u16 = 0;
+    let mut stime: u32 = 0;
     stime = stime + 1;          // Start time at 1. Any time value less than 1 means there was an error.
     
     cortex_m::interrupt::free(|cs| {
@@ -68,20 +65,28 @@ fn main() -> ! {
     
     unsafe { NVIC::unmask(Interrupt::TIM2); }  // Enable the timer interrupt in the NVIC.
 
-    //console.cprint("- - - - BOOT COMPLETE - - - -\r");
+    console.sprintln("- - - - BOOT COMPLETE - - - -");
 
     loop {
+        console.sprintln("- - - -");
+        
         let nmea = gps.get_packet();
-        let s = nfmt::u16_to_string(nmea.x);
-        console.cprint(&s);
-        console.sprint("- - - -\r\n");
-        // Remove Before Flight
-        //console.cprint_telem("Time (s) = ", get_time());
+
+        let utc = nfmt::u32_to_string(nmea.utc);
+        let lat = nfmt::u32_to_string(nmea.lat);
+        let long = nfmt::u32_to_string(nmea.long);
+        let alt = nfmt::u32_to_string(nmea.alt);
+
+        console.scprintln("UTC = ", &utc);
+        console.scprintln("LAT = ", &lat);
+        console.scprintln("LONG = ", &long);
+        console.scprintln("ALT = ", &alt);
+        console.scprintln("ST = ", &nfmt::u32_to_string(get_stime()));
     }
 }
 
-fn get_time() -> u16 {
-    let mut current_time: u16 = 0;
+fn get_stime() -> u32 {
+    let mut current_time: u32 = 0;
     cortex_m::interrupt::free(|cs| {
         if let Some(ref mut stime) = ST.borrow(cs).borrow_mut().deref_mut() {    
             current_time = *stime;

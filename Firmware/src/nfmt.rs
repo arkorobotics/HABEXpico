@@ -1,12 +1,12 @@
 // Nano Format (nfmt)
 
-pub fn u16_to_string<'a>(num: u16) -> [u8; 10] {
+pub fn u32_to_string<'a>(num: u32) -> [u8; 10] {
 
     let mut s: [u8; 10] = [0; 10];
 
     let mut i = 9;
 
-    let mut result: u16 = num / 10;
+    let mut result: u32 = num / 10;
     let mut rem: u8 = (num % 10) as u8;
 
     if num < 10 {

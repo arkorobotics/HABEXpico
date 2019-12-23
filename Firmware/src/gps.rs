@@ -6,7 +6,10 @@ use stm32l0xx_hal::{prelude::*, gpio, serial};
 use nb::block;
 
 pub struct NMEA {
-    pub x: u16,
+    pub utc: u32,
+    pub lat: u32,
+    pub long: u32,
+    pub alt: u32,
 }
 
 pub struct GPS<'a> {
@@ -32,6 +35,8 @@ impl<'a> GPS<'a> {
     }
 
     pub fn get_packet(&mut self) -> NMEA {
+
+        // TODO: Add interrupt mask here to prevent TIM2 from firing during packet rx?
 
         let mut packet: [u8; 100] = [0; 100];
         let mut gga_valid: u8 = 0;
@@ -66,7 +71,7 @@ impl<'a> GPS<'a> {
         // Parse NMEA Packet
         // let lat = s.parse::<i32>().unwrap();
 
-        let nmea: NMEA = NMEA { x: 589 };
+        let nmea: NMEA = NMEA { utc: 0, lat: 0, long: 0, alt: 0 };
         return nmea;
     }
 }

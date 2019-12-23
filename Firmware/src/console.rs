@@ -29,19 +29,34 @@ impl<'a> CONSOLE<'a> {
         }
     }
 
-    pub fn cprint(&mut self, packet: &[u8] ) -> () {
-        for i in 0..packet.len() {
-            block!(self.console_tx.write(packet[i])).ok();
+    pub fn sprintln(&mut self, s: &str) -> () {
+        for c in s.chars() { 
+            block!(self.console_tx.write(c as u8)).ok();
+        }
+        self.sprint("\r\n");
+    }
+
+    pub fn cprint(&mut self, c: &[u8] ) -> () {
+        for i in 0..c.len() {
+            block!(self.console_tx.write(c[i])).ok();
         }
     }
-    
-    /*
-    pub fn cprint_telem(&mut self, s: &str, c: u16) -> () {
-        writeln!(self.console_tx, "{}{}\r", s, c).unwrap();
+
+    pub fn cprintln(&mut self, c: &[u8] ) -> () {
+        for i in 0..c.len() {
+            block!(self.console_tx.write(c[i])).ok();
+        }
+        self.sprint("\r\n");
     }
-    
-    pub fn print_char(&mut self, c: u8) -> () {
-        block!(self.console_tx.write(c)).ok();
+
+    pub fn scprint(&mut self, s: &str, c: &[u8]) -> () {
+        self.sprint(s);
+        self.cprint(c);
     }
-    */
+
+    pub fn scprintln(&mut self, s: &str, c: &[u8]) -> () {
+        self.sprint(s);
+        self.cprint(c);
+        self.sprint("\r\n");
+    }
 }
