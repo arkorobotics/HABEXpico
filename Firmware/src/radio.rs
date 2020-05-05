@@ -4,16 +4,16 @@
 use stm32l0xx_hal::{pac, prelude::*, gpio, spi};
 
 pub struct RADIO<'a> {
-    pub radio_spi: &'a mut spi::Spi< pac::SPI1, (gpio::gpioa::PA5<gpio::Input<gpio::Floating>>, 
-        gpio::gpioa::PA6<gpio::Input<gpio::Floating>>, 
-        gpio::gpioa::PA7<gpio::Input<gpio::Floating>>)>,
+    pub radio_spi: &'a mut spi::Spi< pac::SPI1, (gpio::gpioa::PA5<gpio::Analog>, 
+        gpio::gpioa::PA6<gpio::Analog>, 
+        gpio::gpioa::PA7<gpio::Analog>)>,
     pub radio_nss: &'a mut gpio::gpioa::PA4<gpio::Output<gpio::PushPull>>,
 }
 
 impl<'a> RADIO<'a> {
-    pub fn new( radio_spi: &'a mut spi::Spi< pac::SPI1, (gpio::gpioa::PA5<gpio::Input<gpio::Floating>>, 
-        gpio::gpioa::PA6<gpio::Input<gpio::Floating>>, 
-        gpio::gpioa::PA7<gpio::Input<gpio::Floating>>)>, 
+    pub fn new( radio_spi: &'a mut spi::Spi< pac::SPI1, (gpio::gpioa::PA5<gpio::Analog>, 
+        gpio::gpioa::PA6<gpio::Analog>, 
+        gpio::gpioa::PA7<gpio::Analog>)>, 
                 radio_nss: &'a mut gpio::gpioa::PA4<gpio::Output<gpio::PushPull>>
               ) -> Self {
         RADIO {

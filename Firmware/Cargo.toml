@@ -16,8 +16,8 @@ panic-halt = "0.2.0"
 nb = "0.1.2"
 
 [dependencies.stm32l0xx-hal]
-version = "0.5.0"
-features = ["stm32l0x1", "rt"]
+version = "0.6.2"
+features = ["stm32l0x1", "io-STM32L021", "rt"]
 
 #[dependencies.stm32l0xx-hal]
 #path = "../../stm32l0xx-hal"

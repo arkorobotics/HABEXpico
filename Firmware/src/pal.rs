@@ -8,11 +8,11 @@ pub struct PAL {
     pub gps_tx: serial::Tx<serial::LPUART1>,                        // GPS TX
     pub gps_rx: serial::Rx<serial::LPUART1>,                        // GPS RX
     pub gps_en: gpio::gpioa::PA1<gpio::Output<gpio::PushPull>>,     // GPS Enable Pin
-    pub radio_spi: spi::Spi< pac::SPI1, (gpio::gpioa::PA5<gpio::Input<gpio::Floating>>, // Radio SPI
-                                        gpio::gpioa::PA6<gpio::Input<gpio::Floating>>, 
-                                        gpio::gpioa::PA7<gpio::Input<gpio::Floating>>)>,   
+    pub radio_spi: spi::Spi< pac::SPI1, (gpio::gpioa::PA5<gpio::Analog>, // Radio SPI
+                                        gpio::gpioa::PA6<gpio::Analog>, 
+                                        gpio::gpioa::PA7<gpio::Analog>)>,   
     pub radio_nss: gpio::gpioa::PA4<gpio::Output<gpio::PushPull>>,  // Radio Chip Select Pin
-    pub adc: adc::Adc,                                              // Analog To Digital Converter
+    pub adc: adc::Adc<adc::Ready>,                                    // Analog To Digital Converter
     pub adc_vstore: gpio::gpioa::PA0<gpio::Analog>,                 // Storage Voltage
     pub timer: Timer<pac::TIM2>,
 }
@@ -35,7 +35,7 @@ impl PAL {
         // //Configure the debug serial peripheral
         let debug_serial = dp
         .USART2
-        .usart((debug_tx_pin, debug_rx_pin), serial::Config::default(), &mut rcc)
+        .usart(debug_tx_pin, debug_rx_pin, serial::Config::default(), &mut rcc)
         .unwrap();
 
         let (console_tx, console_rx) = debug_serial.split();
@@ -50,7 +50,7 @@ impl PAL {
         // Configure the GPS serial peripheral
         let gps_serial = dp
             .LPUART1
-            .usart((gps_tx_pin, gps_rx_pin), serial::Config::default(), &mut rcc)
+            .usart(gps_tx_pin, gps_rx_pin, serial::Config::default(), &mut rcc)
             .unwrap();
 
         let (gps_tx, gps_rx) = gps_serial.split();

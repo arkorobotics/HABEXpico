@@ -4,12 +4,12 @@
 use stm32l0xx_hal::{prelude::*, adc, gpio};
 
 pub struct POWER<'a> {
-    pub adc: &'a mut adc::Adc,
+    pub adc: &'a mut adc::Adc<adc::Ready>,
     pub adc_vstore: &'a mut gpio::gpioa::PA0<gpio::Analog>,
 }
 
 impl<'a> POWER<'a> {
-    pub fn new( adc: &'a mut adc::Adc,
+    pub fn new( adc: &'a mut adc::Adc<adc::Ready>,
                 adc_vstore: &'a mut gpio::gpioa::PA0<gpio::Analog>,
               ) -> Self {
         POWER {
