@@ -41,11 +41,13 @@ impl<'a> GPS<'a> {
         let mut packet: [u8; 100] = [0; 100];
         let mut gga_valid: u8 = 0;
 
-        for i in 0..100 {
-            packet[i] = 0;
-        }
-
         while gga_valid == 0 {
+            
+            for i in 0..100 {
+                packet[i] = 0;
+            }
+
+            self.gps_rx.clear_errors();
 
             // Sync to start delimiter "$" (0x24)
             while packet[0] != ('$' as u8) {
@@ -56,7 +58,7 @@ impl<'a> GPS<'a> {
             packet[2] = block!(self.gps_rx.read()).unwrap();
             packet[3] = block!(self.gps_rx.read()).unwrap();
             packet[4] = block!(self.gps_rx.read()).unwrap();
-
+            
             if (packet[1] == ('G' as u8)) && (packet[2] == ('N' as u8)) && (packet[3] == ('G' as u8)) && (packet[4] == ('G' as u8)){
                 gga_valid = 1;
             }   

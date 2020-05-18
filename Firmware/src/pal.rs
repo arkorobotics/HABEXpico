@@ -34,9 +34,16 @@ impl PAL {
 
         // //Configure the debug serial peripheral
         let debug_serial = dp
-        .USART2
-        .usart(debug_tx_pin, debug_rx_pin, serial::Config::default(), &mut rcc)
-        .unwrap();
+            .USART2
+            .usart(debug_tx_pin, debug_rx_pin, 
+                serial::Config {
+                    baudrate: 9_600_u32.bps(),
+                    wordlength: serial::WordLength::DataBits8,
+                    parity: serial::Parity::ParityNone,
+                    stopbits: serial::StopBits::STOP1,
+                }, 
+                &mut rcc)
+            .unwrap();
 
         let (console_tx, console_rx) = debug_serial.split();
         
@@ -50,7 +57,14 @@ impl PAL {
         // Configure the GPS serial peripheral
         let gps_serial = dp
             .LPUART1
-            .usart(gps_tx_pin, gps_rx_pin, serial::Config::default(), &mut rcc)
+            .usart(gps_tx_pin, gps_rx_pin, 
+                serial::Config {
+                    baudrate: 9_600_u32.bps(),
+                    wordlength: serial::WordLength::DataBits8,
+                    parity: serial::Parity::ParityNone,
+                    stopbits: serial::StopBits::STOP1,
+                },
+                &mut rcc)
             .unwrap();
 
         let (gps_tx, gps_rx) = gps_serial.split();

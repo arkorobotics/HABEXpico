@@ -26,8 +26,6 @@ static ST: Mutex<RefCell<Option<u32>>> = Mutex::new(RefCell::new(None));
 #[entry]
 fn main() -> ! {
 
-    let mut msg: [u8; 100] = [0; 100];
-
     let mut pal = pal::PAL::new();
 
     let mut console = console::CONSOLE::new(&mut pal.console_tx, 
@@ -57,14 +55,14 @@ fn main() -> ! {
     
     let mut stime: u32 = 0;
     stime = stime + 1;          // Start time at 1. Any time value less than 1 means there was an error.
-    
+
+    unsafe { NVIC::unmask(Interrupt::TIM2); }  // Enable the timer interrupt in the NVIC.
+
     cortex_m::interrupt::free(|cs| {
         *ST.borrow(cs).borrow_mut() = Some(stime);
         *TIMER.borrow(cs).borrow_mut() = Some(timer);
     });
     
-    unsafe { NVIC::unmask(Interrupt::TIM2); }  // Enable the timer interrupt in the NVIC.
-
     console.sprintln("- - - - BOOT COMPLETE - - - -");
 
     loop {
@@ -81,6 +79,7 @@ fn main() -> ! {
         console.scprintln("LAT = ", &lat);
         console.scprintln("LONG = ", &long);
         console.scprintln("ALT = ", &alt);
+        
         console.scprintln("ST = ", &nfmt::u32_to_string(get_stime()));
     }
 }

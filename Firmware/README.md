@@ -26,19 +26,11 @@ $ cargo build --release
     $ stm32flash -e 0 -w program.bin -v -g 0x0 /dev/tty.usbserial-A601L0OF
     ```
 
-## Flash using St-Flash
-
-1. Use the following command to flash the debug build:
-    ```
-    $ ./flash.sh target/thumbv6m-none-eabi/debug/habexpico
-    ```
-
-2. Use the following command to flash the release build:
-    ```
-    $ ./flash.sh
-    ```
-
 ## Flash and Debug
+
+IMPORTANT: You may experience odd behavior (during boot/operations) when using the `./flash.sh` script to program the MCU. Using the OpenOCD/GDB method will give much more consistent results. You must power both the debugger and target MCU to program the device. Once programmed, device will only boot in one of two modes: 
+a) The debugger is connected and powered along with the target (powered separately via USB in this design). The device will not boot if the debugger is connected, but unpowered.
+b) The target is powered and the debugger is completely disconnected from the device.
 
 1. Terminal 1 - OpenOCD Session:
     ``` 
@@ -54,4 +46,18 @@ $ cargo build --release
 3. Terminal 3 - GDB Py Session:
     ``` 
     $ ./gdb_session.sh target/thumbv6m-none-eabi/debug/habexpico -d
+    ```
+
+## Flash using St-Flash
+
+1. Use the following command to flash the debug build:
+    ```
+    NOTE THIS MAY NOT FUNCTION CONSISTENTLY. THERE IS CURRENTLY AN UNRESOLVED ISSUE WITH THIS SCRIPT. USE THE OPENOCD/GDB FLASH AND DEBUG INSTRUCTIONS ABOVE.
+    $ ./flash.sh target/thumbv6m-none-eabi/debug/habexpico
+    ```
+
+2. Use the following command to flash the release build:
+    ```
+    NOTE THIS MAY NOT FUNCTION CONSISTENTLY. THERE IS CURRENTLY AN UNRESOLVED ISSUE WITH THIS SCRIPT. USE THE OPENOCD/GDB FLASH AND DEBUG INSTRUCTIONS ABOVE.
+    $ ./flash.sh
     ```
