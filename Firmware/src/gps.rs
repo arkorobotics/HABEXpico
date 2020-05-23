@@ -36,16 +36,14 @@ impl<'a> GPS<'a> {
 
     pub fn get_packet(&mut self) -> NMEA {
 
-        // TODO: Add interrupt mask here to prevent TIM2 from firing during packet rx?
-
         let mut packet: [u8; 100] = [0; 100];
         let mut gga_valid: u8 = 0;
 
+        for i in 0..100 {
+            packet[i] = 0;
+        }
+        
         while gga_valid == 0 {
-            
-            for i in 0..100 {
-                packet[i] = 0;
-            }
 
             self.gps_rx.clear_errors();
 
@@ -62,7 +60,6 @@ impl<'a> GPS<'a> {
             if (packet[1] == ('G' as u8)) && (packet[2] == ('N' as u8)) && (packet[3] == ('G' as u8)) && (packet[4] == ('G' as u8)){
                 gga_valid = 1;
             }   
-
         }
 
         for i in 5..100 {

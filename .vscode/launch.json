@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "openocd",
+            "cwd": "${workspaceRoot}/Firmware",
+            "executable": "target/thumbv6m-none-eabi/debug/habexpico",
+            "name": "Debug (OpenOCD)",
+            "device": "STM32L011G4",
+            "configFiles": [
+                "interface/stlink-v2.cfg",
+                "target/stm32l0.cfg"
+            ],
+            "runToMain": true
+        }
+    ]
+}
