@@ -66,6 +66,10 @@ fn main() -> ! {
     console.sprintln("- - - - BOOT COMPLETE - - - -");
 
     loop {
+        /* DEBUG MODE */
+        console.print(gps.read_char());
+        
+        /* OPERATING MODE
         console.sprintln("- - - -");
         
         let nmea = gps.get_packet();
@@ -81,6 +85,7 @@ fn main() -> ! {
         console.scprintln("ALT = ", &alt);
         
         console.scprintln("ST = ", &nfmt::u32_to_string(get_stime()));
+        */
     }
 }
 

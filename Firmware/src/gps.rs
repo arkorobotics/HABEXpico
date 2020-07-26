@@ -32,6 +32,13 @@ impl<'a> GPS<'a> {
 
     pub fn init(&mut self) -> () {
         let _gps_err = self.gps_en.set_low();
+
+        // Try adding:
+        // self.gps_rx.clear_errors();
+    }
+
+    pub fn read_char(&mut self) -> u8 {
+        return block!(self.gps_rx.read()).unwrap();
     }
 
     pub fn get_packet(&mut self) -> NMEA {
@@ -45,6 +52,7 @@ impl<'a> GPS<'a> {
         
         while gga_valid == 0 {
 
+            // And getting rid of v
             self.gps_rx.clear_errors();
 
             // Sync to start delimiter "$" (0x24)
@@ -72,5 +80,27 @@ impl<'a> GPS<'a> {
 
         let nmea: NMEA = NMEA { utc: 0, lat: 0, long: 0, alt: 0 };
         return nmea;
+    }
+
+    /// Parses the specified NMEA packet field and returns its numeric value
+    /// TODO: Add floating point support in another function
+    pub fn parse_field_u32(packet: [u8; 100], field_index: u16) -> u32 {
+
+        let mut field_start_idx = 0;
+        let mut field_stop_idx = 0;
+
+        for i in 0..100 {
+
+            if packet[i] == (',' as u8) {
+            
+                //if field_index == {
+                    
+                //}
+
+                //field_count += 1;
+            }
+        }
+
+        return 0;
     }
 }

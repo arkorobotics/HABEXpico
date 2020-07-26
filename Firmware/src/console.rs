@@ -23,6 +23,10 @@ impl<'a> CONSOLE<'a> {
         }
     }
 
+    pub fn print(&mut self, c: u8 ) -> () {
+            block!(self.console_tx.write(c)).ok();
+    }
+
     pub fn sprint(&mut self, s: &str) -> () {
         for c in s.chars() { 
             block!(self.console_tx.write(c as u8)).ok();
