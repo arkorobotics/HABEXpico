@@ -5,12 +5,7 @@ use stm32l0xx_hal::{prelude::*, gpio, serial};
 
 use nb::block;
 
-pub struct NMEA {
-    pub utc: u32,
-    pub lat: u32,
-    pub long: u32,
-    pub alt: u32,
-}
+use crate::nmea;
 
 pub struct GPS<'a> {
     pub gps_tx: &'a mut serial::Tx<serial::LPUART1>,
@@ -41,7 +36,7 @@ impl<'a> GPS<'a> {
         return block!(self.gps_rx.read()).unwrap();
     }
 
-    pub fn get_packet(&mut self) -> NMEA {
+    pub fn get_packet(&mut self) -> nmea::NMEA {
 
         let mut packet: [u8; 100] = [0; 100];
         let mut gga_valid: u8 = 0;
@@ -77,30 +72,9 @@ impl<'a> GPS<'a> {
 
         // Parse NMEA Packet
         // let lat = s.parse::<i32>().unwrap();
+        // nmea::parse_field_u32(packet, 0);
 
-        let nmea: NMEA = NMEA { utc: 0, lat: 0, long: 0, alt: 0 };
+        let nmea: nmea::NMEA = nmea::NMEA { utc: 0, lat: 0, long: 0, alt: 0 };
         return nmea;
-    }
-
-    /// Parses the specified NMEA packet field and returns its numeric value
-    /// TODO: Add floating point support in another function
-    pub fn parse_field_u32(packet: [u8; 100], field_index: u16) -> u32 {
-
-        let mut field_start_idx = 0;
-        let mut field_stop_idx = 0;
-
-        for i in 0..100 {
-
-            if packet[i] == (',' as u8) {
-            
-                //if field_index == {
-                    
-                //}
-
-                //field_count += 1;
-            }
-        }
-
-        return 0;
     }
 }
