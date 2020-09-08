@@ -5,16 +5,16 @@ pub struct NMEA {
     pub alt: u32,
 }
 
-/// Parses the specified NMEA packet field and returns its numeric value
+/// Parses the specified NMEA packet field and returns its numeric value.
 /// TODO: Add floating point support in another function
-pub fn parse_field_u32(packet: [u8; 100], field_index: u16) -> u32 {
+pub fn parse_field_u32(packet: [char; 100], field_index: u16) -> u32 {
 
     let mut field_start_idx = 0;
     let mut field_stop_idx = 0;
 
     for i in 0..100 {
 
-        if packet[i] == (',' as u8) {
+        if packet[i] == ',' {
         
             //if field_index == {
                 

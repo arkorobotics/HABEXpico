@@ -32,42 +32,43 @@ impl<'a> GPS<'a> {
         // self.gps_rx.clear_errors();
     }
 
-    pub fn read_char(&mut self) -> u8 {
-        return block!(self.gps_rx.read()).unwrap();
+    pub fn read_char(&mut self) -> char {
+        return block!(self.gps_rx.read()).unwrap() as char;
     }
 
     pub fn get_packet(&mut self) -> nmea::NMEA {
 
-        let mut packet: [u8; 100] = [0; 100];
+        let mut packet: [char; 100] = [0 as char; 100];
         let mut gga_valid: u8 = 0;
 
         for i in 0..100 {
-            packet[i] = 0;
+            packet[i] = 0 as char;
         }
         
         while gga_valid == 0 {
 
-            // And getting rid of v
+            // Clear any UART errors. 
+            // TODO: This is not good practice. Future builds should include error checking/resolving.
             self.gps_rx.clear_errors();
 
             // Sync to start delimiter "$" (0x24)
-            while packet[0] != ('$' as u8) {
-                packet[0] = block!(self.gps_rx.read()).unwrap();
+            while packet[0] != '$' {
+                packet[0] = self.read_char(); //block!(self.gps_rx.read()).unwrap();
             }
 
-            packet[1] = block!(self.gps_rx.read()).unwrap();
-            packet[2] = block!(self.gps_rx.read()).unwrap();
-            packet[3] = block!(self.gps_rx.read()).unwrap();
-            packet[4] = block!(self.gps_rx.read()).unwrap();
+            packet[1] = self.read_char();
+            packet[2] = self.read_char();
+            packet[3] = self.read_char();
+            packet[4] = self.read_char();
             
-            if (packet[1] == ('G' as u8)) && (packet[2] == ('N' as u8)) && (packet[3] == ('G' as u8)) && (packet[4] == ('G' as u8)){
+            if (packet[1] == 'G') && (packet[2] == 'N') && (packet[3] == 'G') && (packet[4] == 'G'){
                 gga_valid = 1;
             }   
         }
 
         for i in 5..100 {
-            packet[i] = block!(self.gps_rx.read()).unwrap();
-            if packet[i] == ('\n' as u8) { break; }
+            packet[i] = self.read_char();
+            if packet[i] == '\n' { break; }
         }
 
         // Parse NMEA Packet

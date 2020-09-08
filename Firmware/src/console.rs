@@ -23,8 +23,8 @@ impl<'a> CONSOLE<'a> {
         }
     }
 
-    pub fn print(&mut self, c: u8 ) -> () {
-            block!(self.console_tx.write(c)).ok();
+    pub fn print(&mut self, c: char ) -> () {
+            block!(self.console_tx.write(c as u8)).ok();
     }
 
     pub fn sprint(&mut self, s: &str) -> () {
@@ -40,25 +40,25 @@ impl<'a> CONSOLE<'a> {
         self.sprint("\r\n");
     }
 
-    pub fn cprint(&mut self, c: &[u8] ) -> () {
+    pub fn cprint(&mut self, c: &[char] ) -> () {
         for i in 0..c.len() {
-            block!(self.console_tx.write(c[i])).ok();
+            block!(self.console_tx.write(c[i] as u8)).ok();
         }
     }
 
-    pub fn cprintln(&mut self, c: &[u8] ) -> () {
+    pub fn cprintln(&mut self, c: &[char] ) -> () {
         for i in 0..c.len() {
-            block!(self.console_tx.write(c[i])).ok();
+            block!(self.console_tx.write(c[i] as u8)).ok();
         }
         self.sprint("\r\n");
     }
 
-    pub fn scprint(&mut self, s: &str, c: &[u8]) -> () {
+    pub fn scprint(&mut self, s: &str, c: &[char]) -> () {
         self.sprint(s);
         self.cprint(c);
     }
 
-    pub fn scprintln(&mut self, s: &str, c: &[u8]) -> () {
+    pub fn scprintln(&mut self, s: &str, c: &[char]) -> () {
         self.sprint(s);
         self.cprint(c);
         self.sprint("\r\n");
