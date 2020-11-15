@@ -1,0 +1,11 @@
+[package]
+name = "nfmt_ts"
+version = "0.1.0"
+authors = ["Arko <dotuplink@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+
+[[bin]]
+name = "nfmt_ts"
+path = "src/nfmt_ts.rs"

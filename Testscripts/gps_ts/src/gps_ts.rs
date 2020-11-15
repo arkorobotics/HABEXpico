@@ -4,10 +4,11 @@ mod nmea;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
+/// GPS Unit Test Script
 fn main() -> () {
     
+    // Open the file in read-only mode (ignoring errors)
     let filename = "../../Datastore/FieldTestData/HABEXPico8_A_fieldtest_20726_hermosa_beach.txt";
-    // Open the file in read-only mode (ignoring errors).
     let file = File::open(filename).unwrap();
     let reader = BufReader::new(file);
 
@@ -28,16 +29,21 @@ fn main() -> () {
         println!("File Line #{}: {}", index + 1, gps_string);
         
         // Convert String to GPS Packet type
+        // TODO: handle OK,ERR
         packet = nmea_string_to_nmea_packet(gps_string).unwrap();
 
-        //nmea::parse_field_u32(packet, 0);
+        let nmea_ = nmea::parse_packet_to_nmea(packet);
+        println!("{}", nmea_.utc);
     }
 }
 
+/// Converts a NMEA string to a NMEA Packet type
 fn nmea_string_to_nmea_packet(nmea_string: String) -> Result<[char; 100], &'static str> {
     
-    // Covert to byte array
+    // Convert nmea string to vector array
     let nmea_vec = nmea_string.chars().collect::<Vec<char>>();
+
+    let mut nmea_packet: [char; 100] = [0 as char; 100];
 
     // Check string length
     if nmea_vec.len() > 100 
@@ -45,11 +51,18 @@ fn nmea_string_to_nmea_packet(nmea_string: String) -> Result<[char; 100], &'stat
         return Err("gps_ts::string_to_packet - String too long.");
     }
 
-    print_nmea_vec(nmea_vec);
+    // Print packet
+    print_nmea_vec(nmea_vec.clone());
 
-    return Ok([0 as char; 100]);
+    for (i, x) in nmea_vec.iter().enumerate()
+    {
+        nmea_packet[i] = *x as char;
+    }
+
+    return Ok(nmea_packet);
 }
 
+/// Debug print NMEA vector
 fn print_nmea_vec(vec: Vec<char>)
 {
     // Print vector length

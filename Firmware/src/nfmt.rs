@@ -1,11 +1,20 @@
-// Nano Format (nfmt)
+/// Nano Format (nfmt)
 
-// Converts U32 value into a nanoformat string
-pub fn u32_to_string<'a>(num: u32) -> [char; 10] {
+/// nfmt uses fixed size char arrays to store the string
+/// resprenstation of an unsigned value.
 
-    let mut s: [char; 10] = [0 as char; 10];
+/// Converts U32 value into a nanoformat number string
+pub fn i32_to_ns<'a>(input: i32) -> [char; 11] {
 
-    let mut i = 9;
+    let mut s: [char; 11] = [0 as char; 11];
+
+    if input < 0 {
+        s[0] = '-' as char;
+    }
+
+    let num: u32 = input.abs() as u32;
+
+    let mut i = 10;
 
     let mut result: u32 = num / 10;
     let mut rem: u8 = (num % 10) as u8;

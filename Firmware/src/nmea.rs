@@ -1,3 +1,5 @@
+
+
 pub struct NMEA {
     pub utc: u32,
     pub lat: u32,
@@ -25,4 +27,15 @@ pub fn parse_field_u32(packet: [char; 100], field_index: u16) -> u32 {
     }
 
     return 0;
+}
+
+/// 
+pub fn parse_packet_to_nmea(packet: [char; 100]) -> NMEA {
+
+    // Verify checksum
+    
+
+    // Return NMEA struct
+    let nmea: NMEA = NMEA { utc: 0, lat: 0, long: 0, alt: 0 };
+    return nmea;
 }

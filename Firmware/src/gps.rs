@@ -36,19 +36,21 @@ impl<'a> GPS<'a> {
         return block!(self.gps_rx.read()).unwrap() as char;
     }
 
-    pub fn get_packet(&mut self) -> nmea::NMEA {
+    pub fn get_packet(&mut self) -> [char; 100] {
 
         let mut packet: [char; 100] = [0 as char; 100];
         let mut gga_valid: u8 = 0;
 
+        // Clear buffer
         for i in 0..100 {
             packet[i] = 0 as char;
         }
         
+        // 
         while gga_valid == 0 {
 
             // Clear any UART errors. 
-            // TODO: This is not good practice. Future builds should include error checking/resolving.
+            // TODO: This is not good practice. Future builds should include error checking and resolving.
             self.gps_rx.clear_errors();
 
             // Sync to start delimiter "$" (0x24)
@@ -71,11 +73,6 @@ impl<'a> GPS<'a> {
             if packet[i] == '\n' { break; }
         }
 
-        // Parse NMEA Packet
-        // let lat = s.parse::<i32>().unwrap();
-        // nmea::parse_field_u32(packet, 0);
-
-        let nmea: nmea::NMEA = nmea::NMEA { utc: 0, lat: 0, long: 0, alt: 0 };
-        return nmea;
+        return packet;
     }
 }
