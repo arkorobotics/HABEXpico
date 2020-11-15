@@ -6,25 +6,37 @@
 /// Converts U32 value into a nanoformat number string
 pub fn i32_to_ns<'a>(input: i32) -> [char; 11] {
 
+    // s[0] = polarity ('-' = negative, '\0' or '+' = positive)
+    // s[1..10] = integer
     let mut s: [char; 11] = [0 as char; 11];
 
+    // Set polarity character
     if input < 0 {
         s[0] = '-' as char;
     }
 
-    let num: u32 = input.abs() as u32;
+    // Set integer characters
+    let num: i32 = input;
 
     let mut i = 10;
 
-    let mut result: u32 = num / 10;
-    let mut rem: u8 = (num % 10) as u8;
+    let mut result: u32 = (num / 10).abs() as u32;
+    let mut rem: u8;
 
-    if num < 10 {
+    // Handle the initial remainder values
+    if input < 0 {
+        rem = ((10 - (num % 10)) %10) as u8;
+    }
+    else {
+        rem = (num % 10) as u8;
+    }
+
+    if (num < 10) && (num > -10) {
         s[i] = (rem + 0x30) as char;
         i -= 1;
     }
     else {
-        // u16 to 'string' conversion goes here
+        // Increment through the remaining integer digits
         while result >= 10 {
             s[i] = (rem + 0x30) as char;
             i -= 1;
