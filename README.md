@@ -1,6 +1,14 @@
 # HABEXpico
 Small High Altitude Balloon Payload
 
+# Build Firmware
+See /Firmware/README.md
+
+# Run Test Suite
+```
+$ cd Testscripts
+$ cargo test -- --nocapture
+```
 
 # TODO
 

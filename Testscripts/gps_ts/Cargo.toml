@@ -4,8 +4,6 @@ version = "0.1.0"
 authors = ["Arko <dotuplink@gmail.com>"]
 edition = "2018"
 
-[dependencies]
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-[[bin]]
-name = "gps_ts"
-path = "src/gps_ts.rs"
+[dependencies]

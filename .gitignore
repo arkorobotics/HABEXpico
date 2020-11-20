@@ -3,5 +3,4 @@
 /Firmware/target
 *.s##
 Firmware/.gdb_history
-Testscripts/gps_ts/target
-Testscripts/nfmt_ts/target
+Testscripts/target

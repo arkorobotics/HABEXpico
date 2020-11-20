@@ -4,3 +4,7 @@
 name = "gps_ts"
 version = "0.1.0"
 
+[[package]]
+name = "nfmt_ts"
+version = "0.1.0"
+

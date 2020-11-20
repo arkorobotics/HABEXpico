@@ -7,7 +7,7 @@
 // TODO: Add error handling!!!
 
 /// Converts I32 value into a nanostring
-pub fn i32_to_ns<'a>(input: i32) -> [char; 11] {
+pub fn i32_to_ns(input: i32) -> [char; 11] {
 
     // s[0] = polarity ('-' = negative, '\0' or '+' = positive)
     // s[1..10] = integer
@@ -58,20 +58,24 @@ pub fn i32_to_ns<'a>(input: i32) -> [char; 11] {
 pub fn ns_to_i32(ns: [char; 11]) -> i32 {
 
     // TODO: Add error handling for values out side the min/max range of i32
+    // TODO: Figure out a way to do this without using i64? Is that even necessary?
 
     let mut ns_i32: i32 = 0;
     let mut result: i64 = 0;
 
+    // Increment through the nanostring array to generate the integer
     for i in 1..11 {
         if ns[i] != (0 as char) {
             result = (result * 10) + ((ns[i] as i64) - ('0' as i64));
         }
     }
 
+    // Set polarity
     if ns[0] == '-' {
         result = result * -1;
     }
 
+    // Sanity check the result will fit in an i32 then assign it
     if result >= -2147483648 && result <= 2147483647 {
         ns_i32 = result as i32;
     }

@@ -1,0 +1,6 @@
+[workspace]
+
+members = [
+    "gps_ts",
+    "nfmt_ts",
+]
