@@ -34,7 +34,7 @@ mod nmea_ts {
             let nmea_string = line.unwrap(); // Ignore errors.
             
             // [debug] Show the line and its number.
-            println!("[nmea] File Line #{}: {}", index + 1, nmea_string);
+            //println!("[nmea] File Line #{}: {}", index + 1, nmea_string);
 
             // Convert String to GPS Packet type
             // TODO: handle OK,ERR
@@ -46,16 +46,17 @@ mod nmea_ts {
             
             if result.is_ok() {
                 // Print parsed nmea packet
-                println!("[nmea] Parsed NMEA - 
-                        utc: {}, 
-                        lat_deg: {}, 
-                        lat_min: {}, 
-                        lat_NS: {}, 
-                        long_deg: {}, 
-                        long_min: {}, 
-                        long_WE: {}, 
-                        alt: {},
-                        cs: 0x{:X?}",
+                println!("[nmea] Parsed NMEA - \
+                        utc: {},      \
+                        lat_deg: {},  \
+                        lat_min: {},  \
+                        lat_NS: {},   \
+                        long_deg: {}, \
+                        long_min: {}, \
+                        long_WE: {},  \
+                        alt: {},      \
+                        cs: 0x{:X?},  \
+                        calc_cs: 0x{:X?}",
                         nmea.utc, 
                         nmea.lat_deg, 
                         nmea.lat_min, 
@@ -64,7 +65,8 @@ mod nmea_ts {
                         nmea.long_min, 
                         nmea.long_WE,
                         nmea.alt,
-                        nmea.cs);
+                        nmea.cs,
+                        nmea.calc_cs);
             }
         }
     }

@@ -10,6 +10,7 @@ pub struct NMEA {
     pub long_WE: char,
     pub alt: i32,
     pub cs: u8,
+    pub calc_cs: u8,
 }
 
 impl NMEA {
@@ -24,6 +25,7 @@ impl NMEA {
             long_WE: ' ',
             alt: 0,
             cs: 0,
+            calc_cs: 0,
         }
     }
 
@@ -33,7 +35,7 @@ impl NMEA {
         // Look for GGA Header
         if (packet[3] == 'G') && (packet[4] == 'G') && (packet[5] == 'A') {
         
-            let mut cs_calc: u8 = 0;
+            self.calc_cs = 0;
 
             let mut comma_idx = 0;
             let mut i = 1;
@@ -41,10 +43,10 @@ impl NMEA {
             while i < 100 {
 
                 if i == 1 {
-                    cs_calc = packet[1] as u8;
+                    self.calc_cs = packet[1] as u8;
                 }
                 else if packet[i] != '*'{
-                    cs_calc = cs_calc ^ (packet[i] as u8);
+                    self.calc_cs = self.calc_cs ^ (packet[i] as u8);
                 }
 
                 if packet[i] == ',' {         // Find commas delimited fields
@@ -142,11 +144,7 @@ impl NMEA {
                 i += 1;
             }
 
-            // Verify checksum
-            println!("Calculated Checksum - dec: {}, hex: 0x{:X?}", cs_calc, cs_calc);
-            println!("Checksum - dec: {}, hex: 0x{:X?}", self.cs, self.cs);
-
-            if cs_calc == self.cs {
+            if self.calc_cs == self.cs {
                 return Ok(());
             }
             else {
