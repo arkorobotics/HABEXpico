@@ -38,7 +38,7 @@ fn main() -> ! {
                                 &mut pal.gps_rx,
                                 &mut pal.gps_en);
     gps.init();
-    
+
     let mut radio = radio::RADIO::new(&mut pal.radio_spi,
                                       &mut pal.radio_nss);
     
@@ -70,9 +70,9 @@ fn main() -> ! {
         /* DEBUG MODE */
         console.print(gps.read_char());
         
-        /* OPERATING MODE
+        /* OPERATING MODE 
         console.sprintln("- - - -");
-        
+
         let nmea = gps.get_packet();
 
         let utc = nfmt::u32_to_string(nmea.utc);

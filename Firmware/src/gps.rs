@@ -2,10 +2,9 @@
 #![deny(unsafe_code)]
 
 use stm32l0xx_hal::{prelude::*, gpio, serial};
-
 use nb::block;
 
-use crate::nmea;
+use super::nmea;
 
 pub struct GPS<'a> {
     pub gps_tx: &'a mut serial::Tx<serial::LPUART1>,
@@ -41,6 +40,8 @@ impl<'a> GPS<'a> {
         let mut packet: [char; 100] = [0 as char; 100];
         let mut gga_valid: u8 = 0;
 
+        let mut nmea = nmea::NMEA::new();
+
         // Clear buffer
         for i in 0..100 {
             packet[i] = 0 as char;
@@ -62,13 +63,14 @@ impl<'a> GPS<'a> {
             packet[2] = self.read_char();
             packet[3] = self.read_char();
             packet[4] = self.read_char();
+            packet[5] = self.read_char();
             
-            if (packet[1] == 'G') && (packet[2] == 'N') && (packet[3] == 'G') && (packet[4] == 'G'){
+            if (packet[3] == 'G') && (packet[4] == 'G') && (packet[5] == 'A') {
                 gga_valid = 1;
             }   
         }
 
-        for i in 5..100 {
+        for i in 6..100 {
             packet[i] = self.read_char();
             if packet[i] == '\n' { break; }
         }

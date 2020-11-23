@@ -1,6 +1,6 @@
 [workspace]
 
 members = [
-    "gps_ts",
+    "nmea_ts",
     "nfmt_ts",
 ]

@@ -12,8 +12,9 @@ $ cargo test -- --nocapture
 
 # TODO
 
+- [DONE] Create NMEA and NFMT test scripts
 - Write NMEA Parser and GPS lib
-- Test GPS lib using test script
+- Test NMEA lib using test script
 - Write Radio lib
 - Test Radio lib using test script
 - Write Power Management lib
