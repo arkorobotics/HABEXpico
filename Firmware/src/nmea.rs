@@ -1,4 +1,5 @@
 use super::nfmt;
+use super::habex;
 
 pub struct NMEA {
     pub utc: i32,
@@ -30,8 +31,10 @@ impl NMEA {
     }
 
     /// Parse GGA Packet
-    pub fn parse_gga_packet_to_nmea(&mut self, packet: [char; 100]) -> Result<(), u8> {
-
+    pub fn parse_gga_packet_to_nmea(&mut self, packet: [char; 100]) -> Result<(), habex::Ecode> {
+        
+        let mut result: habex::Ecode;
+        
         // Look for GGA Header
         if (packet[3] == 'G') && (packet[4] == 'G') && (packet[5] == 'A') {
         
@@ -63,8 +66,11 @@ impl NMEA {
                                 for x in 3..9 {
                                     utc_ns[10-(x-3)] = packet[(i-1)-x];
                                 }
-        
-                                self.utc = nfmt::ns_to_i32(utc_ns);
+
+                                match nfmt::ns_to_i32(utc_ns) {
+                                    Ok(s) => { self.utc = s; },
+                                    Err(e) => { return Err(e); },
+                                }
                             }, 
                             3 => {  // Lat "DDMM.mmxxx,"
 
@@ -72,7 +78,11 @@ impl NMEA {
                                     let mut lat_deg_ns: [char; 11] = [0 as char; 11];
                                     lat_deg_ns[10] = packet[(i-1)-8];
                                     lat_deg_ns[9] = packet[(i-1)-9];
-                                    self.lat_deg = nfmt::ns_to_i32(lat_deg_ns);
+                                    
+                                    match nfmt::ns_to_i32(lat_deg_ns) {
+                                        Ok(s) => { self.lat_deg = s; },
+                                        Err(e) => { return Err(e); },
+                                    }
                                 }
 
                                 {   // Parse Latitude Minutes
@@ -81,7 +91,11 @@ impl NMEA {
                                     lat_min_ns[9] = packet[(i-1)-4];
                                     lat_min_ns[8] = packet[(i-1)-6];
                                     lat_min_ns[7] = packet[(i-1)-7];
-                                    self.lat_min = nfmt::ns_to_i32(lat_min_ns);
+
+                                    match nfmt::ns_to_i32(lat_min_ns) {
+                                        Ok(s) => { self.lat_min = s; },
+                                        Err(e) => { return Err(e); },
+                                    }
                                 }
                             }, 
                             4 => {  // Lat polarity "X,"
@@ -95,7 +109,11 @@ impl NMEA {
                                     long_deg_ns[10] = packet[(i-1)-8];
                                     long_deg_ns[9] = packet[(i-1)-9];
                                     long_deg_ns[8] = packet[(i-1)-10];
-                                    self.long_deg = nfmt::ns_to_i32(long_deg_ns);
+
+                                    match nfmt::ns_to_i32(long_deg_ns) {
+                                        Ok(s) => { self.long_deg = s; },
+                                        Err(e) => { return Err(e); },
+                                    }
                                 }
 
                                 {   // Parse Longitude Minutes
@@ -104,7 +122,11 @@ impl NMEA {
                                     long_min_ns[9] = packet[(i-1)-4];
                                     long_min_ns[8] = packet[(i-1)-6];
                                     long_min_ns[7] = packet[(i-1)-7];
-                                    self.long_min = nfmt::ns_to_i32(long_min_ns);
+
+                                    match nfmt::ns_to_i32(long_min_ns) {
+                                        Ok(s) => { self.long_min = s; },
+                                        Err(e) => { return Err(e); },
+                                    }
                                 }
                             }, 
                             6 => {  // Long polarity "X,"
@@ -117,13 +139,21 @@ impl NMEA {
 
                                 for x in 2..6 {
                                     if packet[(i-1)-x] == ',' {
-                                        self.alt = nfmt::ns_to_i32(alt_ns);
+                                        match nfmt::ns_to_i32(alt_ns) {
+                                            Ok(s) => { self.alt = s; },
+                                            Err(e) => { return Err(e); },
+                                        }
+                                        
                                         break;
                                     }
 
                                     alt_ns[10-(x-2)] = packet[(i-1)-x];
                                 }
-                                self.alt = nfmt::ns_to_i32(alt_ns);
+
+                                match nfmt::ns_to_i32(alt_ns) {
+                                    Ok(s) => { self.alt = s; },
+                                    Err(e) => { return Err(e); },
+                                }
                             }, 
                             
                             _ => (),
@@ -137,7 +167,11 @@ impl NMEA {
                     cs_ns[1] = packet[(i+2)];
                     cs_ns[0] = packet[(i+1)];
 
-                    self.cs = nfmt::h2_to_u8(cs_ns);
+                    match nfmt::h2_to_u8(cs_ns) {
+                        Ok(s) => { self.cs = s; },
+                        Err(e) => { return Err(e); },
+                    }
+
                     break;
                 }
 
@@ -148,12 +182,12 @@ impl NMEA {
                 return Ok(());
             }
             else {
-                return Err(2);
+                return Err(habex::Ecode::NmeaCsFail);
             }
         }
         else {
             // eventually returns an error
-            return Err(1);
+            return Err(habex::Ecode::NmeaInvalidGga);
         }
     }
 }

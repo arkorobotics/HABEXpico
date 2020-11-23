@@ -1,10 +1,14 @@
 #[path="../../../Firmware/src/nfmt.rs"] 
 mod nfmt;
 
+#[path="../../../Firmware/src/habex.rs"]
+mod habex;
+
 #[cfg(test)]
 mod nfmt_ts {
 
     use super::nfmt;
+    use super::habex;
 
     /// Nano Format Unit Test Script
     #[test]
@@ -20,12 +24,28 @@ mod nfmt_ts {
             let l_i32: i32 = test_array[x];
             print!("[nfmt] i32: {}, ", l_i32);
 
-            let l_i32_ns = nfmt::i32_to_ns(l_i32);
-            print!("i32_to_ns: ");
-            print_ns(l_i32_ns);
+            let mut l_i32_ns: [char; 11] = [0 as char; 11];
+            match nfmt::i32_to_ns(l_i32) {
+                Ok(s) => { 
+                    l_i32_ns = s;
+                    print!("i32_to_ns: ");
+                    print_ns(l_i32_ns); 
+                },
+                Err(e) => { 
+                    panic!("[nfmt] i32_to_ns: error code - {}", e as u8);
+                },
+            }
 
-            let l_ns_i32 = nfmt::ns_to_i32(l_i32_ns);
-            print!(", ns_to_i32: {}", l_ns_i32);
+            let mut l_ns_i32: i32 = 0;
+            match nfmt::ns_to_i32(l_i32_ns) {
+                Ok(s) => { 
+                    l_ns_i32 = s;
+                    print!(", ns_to_i32: {}", l_ns_i32);
+                },
+                Err(e) => { 
+                    panic!("[nfmt] ns_to_i32: error code - {}", e as u8);
+                },
+            }
 
             println!("");
             
@@ -37,12 +57,21 @@ mod nfmt_ts {
         let h2: [char; 2] = ['A','5'];
         let expected_h2_u8: u8 = 0xA5;
 
-        let h2_u8: u8 = nfmt::h2_to_u8(h2);
-        println!("[nfmt] Expected H2 as U8: {:X?}", expected_h2_u8);
-        println!("[nfmt] Converted H2 as U8: {:X?}", h2_u8);
-        assert_eq!(expected_h2_u8, h2_u8);
+        let mut h2_u8: u8 = 0;
 
-        println!("[nfmt] Test Passed!")
+        match nfmt::h2_to_u8(h2) {
+            Ok(s) => { 
+                h2_u8 = s;
+                println!("[nfmt] Expected H2 as U8: {:X?}", expected_h2_u8);
+                println!("[nfmt] Converted H2 as U8: {:X?}", h2_u8);
+                assert_eq!(expected_h2_u8, h2_u8);
+            },
+            Err(e) => { 
+                panic!("[nfmt] h2_to_u8: error code - {}", e as u8);
+            },
+        }
+
+        println!("[nfmt] Test Complete!")
     }
 
     /// Print nano string

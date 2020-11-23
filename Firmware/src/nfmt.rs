@@ -4,10 +4,10 @@
 /// resprenstation of an unsigned value. The goal here is to
 /// use fixed size arrays to avoid heap allocation.
 
-// TODO: Add error handling!!!
+use super::habex;
 
-/// Converts I32 value into a nanostring
-pub fn i32_to_ns(input: i32) -> [char; 11] {
+/// Convert an I32 value into a nanostring
+pub fn i32_to_ns(input: i32) -> Result<[char; 11], habex::Ecode> {
 
     // s[0] = polarity ('-' = negative, '\0' or '+' = positive)
     // s[1..10] = integer
@@ -51,27 +51,35 @@ pub fn i32_to_ns(input: i32) -> [char; 11] {
         s[_i] = ((result as u8) + 0x30) as char;
     }
 
-    return s;
+    return Ok(s);
 }
 
-/// Converts a nanostring into a I32 value
-pub fn ns_to_i32(ns: [char; 11]) -> i32 {
-
-    // TODO: Add error handling for values out side the min/max range of i32
-    // TODO: Figure out a way to do this without using i64? Is that even necessary?
+/// Convert a nanostring into a I32 value
+pub fn ns_to_i32(ns: [char; 11]) -> Result<i32, habex::Ecode> {
 
     let mut ns_i32: i32 = 0;
     let mut result: i64 = 0;
+    let mut sign_flag: bool = false; 
 
     // Increment through the nanostring array to generate the integer
-    for i in 1..11 {
-        if ns[i] != (0 as char) {
+    for i in 0..11 {
+        if ns[i] >= '0' && ns[i] <= '9' {
             result = (result * 10) + ((ns[i] as i64) - ('0' as i64));
+        }
+        else if ns[i] == (0 as char) {
+            // Ignore character
+        }
+        else if ns[i] == '-' {
+            // Set polarity flag to apply after result computation is complete
+            sign_flag = true;
+        }
+        else {
+            return Err(habex::Ecode::NfmtNsInvalidChar);
         }
     }
 
     // Set polarity
-    if ns[0] == '-' {
+    if sign_flag == true {
         result = result * -1;
     }
 
@@ -79,23 +87,26 @@ pub fn ns_to_i32(ns: [char; 11]) -> i32 {
     if result >= -2147483648 && result <= 2147483647 {
         ns_i32 = result as i32;
     }
+    else {
+        return Err(habex::Ecode::NfmtNsOutOfRange);
+    }
 
-    return ns_i32;
+    return Ok(ns_i32);
 }
 
-/// Converts a two element char array representing an 8-bit hex value to u8
-pub fn h2_to_u8(h2: [char; 2]) -> u8 {
+/// Convert a two element char array representing an 8-bit hex value to u8
+pub fn h2_to_u8(h2: [char; 2]) -> Result<u8, habex::Ecode> {
 
     let mut h2_u8: u8 = 0;
-
+    
     for i in 0..2 {
         match h2[i] {
             '0'..='9' => { h2_u8 = h2_u8 + (((h2[i] as u8) - ('0' as u8)) << ((1-i)*4)) },
             'a'..='f' => { h2_u8 = h2_u8 + (((h2[i] as u8) - ('a' as u8) + 10) << ((1-i)*4)) },
             'A'..='F' => { h2_u8 = h2_u8 + (((h2[i] as u8) - ('A' as u8) + 10) << ((1-i)*4)) },
-            _ => (),
+            _ => { return Err(habex::Ecode::NfmtInvalidH2) },
         }
     }
 
-    return h2_u8;
+    return Ok(h2_u8);
 }

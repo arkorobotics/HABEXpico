@@ -15,6 +15,7 @@ use cortex_m_rt::entry;
 
 mod console;
 mod gps;
+mod habex;
 mod nmea;
 mod nfmt;
 mod pal;
