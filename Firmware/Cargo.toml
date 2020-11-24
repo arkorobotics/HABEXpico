@@ -23,9 +23,6 @@ features = ["stm32l0x1", "io-STM32L021", "rt"]
 #path = "../../stm32l0xx-hal"
 #features = ["stm32l0x1", "rt"]
 
-[features]
-# Miscellaneaous features
-disable-linker-script = []
 
 [profile.dev]
 codegen-units = 1
