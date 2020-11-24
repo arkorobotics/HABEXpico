@@ -12,5 +12,6 @@ before_script:
 script:
   - cd Firmware
   - cargo build --release
+  - cargo bloat --release
   - cd ../Testscripts
   - cargo test -- --nocapture --test-threads=1

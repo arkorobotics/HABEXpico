@@ -1,11 +1,11 @@
 # Dependecies for building and flashing
-0. Install rustup and set target
+1. Install rustup and set target
     Install rustup by following the instructions here https://rustup.rs then run the following commands:
     ```
     $ rustup target add thumbv6m-none-eabi
     ```
 
-1. Download and install the arm-none-eabi toolchain
+2. Download and install the arm-none-eabi toolchain
 
 	https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads
 	We recommend installing the precompiled binaries to '/usr/local/opt'. 
@@ -17,11 +17,11 @@
     $ sudo apt-get install gcc-arm-none-eabi
     ```
 
-2. Install STLink Tool (>=v1.5.1)
+3. Install STLink Tool (>=v1.5.1)
 
 	https://github.com/texane/stlink
 
-3. Install OpenOCD (OPTIONAL)
+4. Install OpenOCD (OPTIONAL)
 
     NOTE: OpenOCD v0.10.0 does not fully support the stm32l0 family MCU. We recommend using `gnu-mcu-eclipse/openocd` instead:
 
@@ -29,13 +29,13 @@
     We recommend installing the precompiled binaries to '/usr/local/opt'. 
 	Add the bin folders (i.e. - /usr/local/opt/gnu-mcu-eclipse/openocd/0.10.0-12-20190422-2015/bin) to your environments variable 'PATH'.
 
-4. Install GDB Dashboard (OPTIONAL)
+5. Install GDB Dashboard (OPTIONAL)
 
 	https://github.com/cyrus-and/gdb-dashboard
 
-5. Install VSCode and the "cortex-debug" extension (OPTIONAL)
+6. Install VSCode and the "cortex-debug" extension (OPTIONAL)
 
-6. Download and install the latest `stm32flash`: (OPTIONAL)
+7. Download and install the latest `stm32flash`: (OPTIONAL)
    https://sourceforge.net/p/stm32flash/code/ci/master/tree/
 
 ## Build
@@ -48,6 +48,13 @@ $ cargo build
 2. Build command for release
 ```
 $ cargo build --release
+```
+
+3. Check bloat
+```
+$ cargo bloat
+or
+$ cargo bloat --release
 ```
 
 ## Flash and debug using OpenOCD
