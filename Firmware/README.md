@@ -1,10 +1,21 @@
 # Dependecies for building and flashing
+0. Install rustup and set target
+    Install rustup by following the instructions here https://rustup.rs then run the following commands:
+    ```
+    $ rustup target add thumbv6m-none-eabi
+    ```
 
 1. Download and install the arm-none-eabi toolchain
 
 	https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads
 	We recommend installing the precompiled binaries to '/usr/local/opt'. 
 	Add the bin folders (/bin & /arm-none-eabi/bin) to your environments variable 'PATH'.
+
+    On Linux:
+    ```
+    $ sudo apt-get update
+    $ sudo apt-get install gcc-arm-none-eabi
+    ```
 
 2. Install STLink Tool (>=v1.5.1)
 
@@ -24,7 +35,7 @@
 
 5. Install VSCode and the "cortex-debug" extension (OPTIONAL)
 
-1. Download and install the latest `stm32flash`: (OPTIONAL)
+6. Download and install the latest `stm32flash`: (OPTIONAL)
    https://sourceforge.net/p/stm32flash/code/ci/master/tree/
 
 ## Build

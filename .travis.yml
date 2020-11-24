@@ -3,6 +3,9 @@ cache: cargo
 rust:
   - stable
 env: TARGET=thumbv6m-none-eabi
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install gcc-arm-none-eabi
 before_script:
   - rustup target add thumbv6m-none-eabi
   - rustup component add rustfmt
