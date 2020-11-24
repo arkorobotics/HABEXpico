@@ -137,7 +137,7 @@ impl NMEA {
                                 // Loop towards the left till you hit a comma or count more than 5
                                 let mut alt_ns: [char; 11] = [0 as char; 11];
 
-                                for x in 2..6 {
+                                for x in 2..7 {
                                     if packet[(i-1)-x] == ',' {
                                         match nfmt::ns_to_i32(alt_ns) {
                                             Ok(s) => { self.alt = s; },
