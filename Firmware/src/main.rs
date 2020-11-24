@@ -69,25 +69,33 @@ fn main() -> ! {
 
     loop {
         /* DEBUG MODE */
-        console.print(gps.read_char());
+        //console.print(gps.read_char());
         
-        /* OPERATING MODE 
+        /* OPERATING MODE */
         console.sprintln("- - - -");
+        match gps.get_packet() {
+            Ok(_) => {
+                match nfmt::i32_to_ns(gps.nmea.utc) {
+                    Ok(s) => {
+                        console.scprintln("UTC = ", &s);
+                    }
+                    Err(_e) => {
+                        //Handle Error
+                    }
+                }
+            }
+            Err(_e) => { 
+                // Handle error here
+            }
+        }
 
-        let nmea = gps.get_packet();
-
-        let utc = nfmt::u32_to_string(nmea.utc);
-        let lat = nfmt::u32_to_string(nmea.lat);
-        let long = nfmt::u32_to_string(nmea.long);
-        let alt = nfmt::u32_to_string(nmea.alt);
-
-        console.scprintln("UTC = ", &utc);
-        console.scprintln("LAT = ", &lat);
-        console.scprintln("LONG = ", &long);
-        console.scprintln("ALT = ", &alt);
+        //console.scprintln("UTC = ", &utc);
+        //console.scprintln("LAT = ", &lat);
+        //console.scprintln("LONG = ", &long);
+        //console.scprintln("ALT = ", &alt);
         
-        console.scprintln("ST = ", &nfmt::u32_to_string(get_stime()));
-        */
+        //console.scprintln("ST = ", &nfmt::u32_to_string(get_stime()));
+        /* */
     }
 }
 

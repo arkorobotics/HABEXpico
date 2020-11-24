@@ -1,8 +1,5 @@
 #[allow(dead_code)]
-#[allow(unused_imports)]
-#[allow(unused_assignments)]
-#[allow(unused_variables)]
-
+#[derive(Debug)]
 pub enum Ecode {
     NmeaCsFail = 1,
     NmeaInvalidGga = 2,
