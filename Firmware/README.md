@@ -50,8 +50,9 @@ $ cargo build
 $ cargo build --release
 ```
 
-3. Check bloat
+3. Check bloat (OPTIONAL)
 ```
+$ cargo install cargo-bloat
 $ cargo bloat
 or
 $ cargo bloat --release

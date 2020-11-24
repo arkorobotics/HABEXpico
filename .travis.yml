@@ -11,6 +11,7 @@ before_script:
   - rustup component add rustfmt
 script:
   - cd Firmware
+  - cargo install cargo-bloat
   - cargo build --release
   - cargo bloat --release
   - cd ../Testscripts
