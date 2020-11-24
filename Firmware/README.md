@@ -78,6 +78,7 @@ b) The target is powered and the debugger is completely disconnected from the de
 3. Terminal 3 - GDB Py Session:
     ``` 
     $ ./gdb_session.sh target/thumbv6m-none-eabi/debug/habexpico -d
+    >>> dashboard -output /dev/ttys001
     ```
 
 ## Flash and Debug using VSCode
