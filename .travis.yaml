@@ -1,0 +1,8 @@
+language: rust
+before_script:
+  - rustup target add thumbv6m-none-eabi
+script:
+  - cd Firmware
+  - cargo build --verbose --workspace
+  - cd ../Testscripts
+  - cargo test -- --nocapture --test-threads=1

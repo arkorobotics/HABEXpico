@@ -1,6 +1,8 @@
 # HABEXpico
 Small High Altitude Balloon Payload
 
+[![Build Status](https://travis-ci.com/arkorobotics/HABEXpico.svg?branch=master)](https://travis-ci.com/arkorobotics/HABEXpico)
+
 # Build & Flash Firmware
 See /Firmware/README.md
 
@@ -9,9 +11,10 @@ See /Testscripts/README.md
 
 # TODO
 
-- [DONE] Create NMEA and NFMT test scripts
-- [DONE] Write NMEA Parser
-- [DONE] Test NMEA lib using test script
+- [DONE] Create NMEA and Nanoformat test scripts
+- [DONE] Write NMEA parser library
+- [DONE] Write Nanoformatter library
+- [DONE] Test NMEA and Nanoformatter libraries using test script
 - Write Radio lib
 - Test Radio lib using test script
 - Write Power Management lib
