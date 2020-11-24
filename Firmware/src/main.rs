@@ -48,7 +48,7 @@ fn main() -> ! {
     let mut power = power::POWER::new(&mut pal.adc,
                                       &mut pal.adc_vstore);
 
-    let vstore = power.read_vstore();
+    let _vstore = power.read_vstore();
 
     // Setup Timekeeper
     let mut timer: Timer<pac::TIM2> = pal.timer;
@@ -91,6 +91,7 @@ fn main() -> ! {
     }
 }
 
+#[allow(dead_code)]
 fn get_stime() -> u32 {
     let mut current_time: u32 = 0;
     cortex_m::interrupt::free(|cs| {

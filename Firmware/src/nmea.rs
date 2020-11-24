@@ -1,3 +1,8 @@
+#[allow(dead_code)]
+#[allow(unused_imports)]
+#[allow(unused_assignments)]
+#[allow(unused_variables)]
+
 use super::nfmt;
 use super::habex;
 
@@ -5,25 +10,26 @@ pub struct NMEA {
     pub utc: i32,
     pub lat_deg: i32,
     pub lat_min: i32,
-    pub lat_NS: char,
+    pub lat_ns: char,
     pub long_deg: i32,
     pub long_min: i32,
-    pub long_WE: char,
+    pub long_we: char,
     pub alt: i32,
     pub cs: u8,
     pub calc_cs: u8,
 }
 
 impl NMEA {
+    #[allow(dead_code)]
     pub fn new() -> Self {
         NMEA {
             utc: 0,
             lat_deg: 0,
             lat_min: 0,     // MM.mm
-            lat_NS: ' ',
+            lat_ns: ' ',
             long_deg: 0,
             long_min: 0,    // MM.mm
-            long_WE: ' ',
+            long_we: ' ',
             alt: 0,
             cs: 0,
             calc_cs: 0,
@@ -31,10 +37,9 @@ impl NMEA {
     }
 
     /// Parse GGA Packet
+    #[allow(dead_code)]
     pub fn parse_gga_packet_to_nmea(&mut self, packet: [char; 100]) -> Result<(), habex::Ecode> {
-        
-        let mut result: habex::Ecode;
-        
+                
         // Look for GGA Header
         if (packet[3] == 'G') && (packet[4] == 'G') && (packet[5] == 'A') {
         
@@ -100,7 +105,7 @@ impl NMEA {
                             }, 
                             4 => {  // Lat polarity "X,"
                                     
-                                    self.lat_NS = packet[(i-1)];
+                                    self.lat_ns = packet[(i-1)];
                             }, 
                             5 => {  // Long "DDDMM.mmxxx,"
 
@@ -131,7 +136,7 @@ impl NMEA {
                             }, 
                             6 => {  // Long polarity "X,"
 
-                                self.long_WE = packet[(i-1)];
+                                self.long_we = packet[(i-1)];
                             }, 
                             10 => {  // Altitude "XXXXX.x,"
                                 // Loop towards the left till you hit a comma or count more than 5

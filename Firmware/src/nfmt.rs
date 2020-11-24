@@ -7,6 +7,7 @@
 use super::habex;
 
 /// Convert an I32 value into a nanostring
+#[allow(dead_code)]
 pub fn i32_to_ns(input: i32) -> Result<[char; 11], habex::Ecode> {
 
     // s[0] = polarity ('-' = negative, '\0' or '+' = positive)
@@ -55,11 +56,12 @@ pub fn i32_to_ns(input: i32) -> Result<[char; 11], habex::Ecode> {
 }
 
 /// Convert a nanostring into a I32 value
+#[allow(dead_code)]
 pub fn ns_to_i32(ns: [char; 11]) -> Result<i32, habex::Ecode> {
 
-    let mut ns_i32: i32 = 0;
+    let mut _ns_i32: i32 = 0;
     let mut result: i64 = 0;
-    let mut sign_flag: bool = false; 
+    let mut _sign_flag: bool = false; 
 
     // Increment through the nanostring array to generate the integer
     for i in 0..11 {
@@ -71,30 +73,31 @@ pub fn ns_to_i32(ns: [char; 11]) -> Result<i32, habex::Ecode> {
         }
         else if ns[i] == '-' {
             // Set polarity flag to apply after result computation is complete
-            sign_flag = true;
+            _sign_flag = true;
         }
         else {
             return Err(habex::Ecode::NfmtNsInvalidChar);
         }
     }
-
+    
     // Set polarity
-    if sign_flag == true {
+    if _sign_flag == true {
         result = result * -1;
     }
 
     // Sanity check the result will fit in an i32 then assign it
     if result >= -2147483648 && result <= 2147483647 {
-        ns_i32 = result as i32;
+        _ns_i32 = result as i32;
     }
     else {
         return Err(habex::Ecode::NfmtNsOutOfRange);
     }
 
-    return Ok(ns_i32);
+    return Ok(_ns_i32);
 }
 
 /// Convert a two element char array representing an 8-bit hex value to u8
+#[allow(dead_code)]
 pub fn h2_to_u8(h2: [char; 2]) -> Result<u8, habex::Ecode> {
 
     let mut h2_u8: u8 = 0;

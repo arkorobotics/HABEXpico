@@ -35,12 +35,13 @@ impl<'a> GPS<'a> {
         return block!(self.gps_rx.read()).unwrap() as char;
     }
 
+    #[allow(dead_code)]
     pub fn get_packet(&mut self) -> [char; 100] {
 
         let mut packet: [char; 100] = [0 as char; 100];
         let mut gga_valid: u8 = 0;
 
-        let mut nmea = nmea::NMEA::new();
+        let mut _nmea = nmea::NMEA::new();
 
         // Clear buffer
         for i in 0..100 {
