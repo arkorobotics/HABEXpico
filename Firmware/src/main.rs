@@ -13,6 +13,7 @@ use cortex_m::interrupt::Mutex;
 use cortex_m::peripheral::NVIC;
 use cortex_m_rt::entry;
 
+
 mod console;
 mod gps;
 mod habex;
@@ -72,30 +73,58 @@ fn main() -> ! {
         //console.print(gps.read_char());
         
         /* OPERATING MODE */
-        console.sprintln("- - - -");
+        console.sprintln("-");
+        // GPS Packet acquisition loop is deterministic and can get stuck
+        // looping over and missing the $GNGGA Packet
         match gps.get_packet() {
             Ok(_) => {
+                console.sprintln("[gps] - New packet!");
                 match nfmt::i32_to_ns(gps.nmea.utc) {
-                    Ok(s) => {
-                        console.scprintln("UTC = ", &s);
-                    }
-                    Err(_e) => {
-                        //Handle Error
-                    }
+                    Ok(s) => { console.scprintln("UTC = ", &s);}
+                    Err(_e) => { console.sprintln("UTC ERROR!"); } //Handle Error
+                }
+
+                match nfmt::i32_to_ns(gps.nmea.lat_deg) {
+                    Ok(s) => { console.scprintln("LAT DD = ", &s);}
+                    Err(_e) => { console.sprintln("ERROR!"); } //Handle Error
+                }
+
+                match nfmt::i32_to_ns(gps.nmea.lat_min) {
+                    Ok(s) => { console.scprintln("LAT MMmm = ", &s);}
+                    Err(_e) => { console.sprintln("ERROR!"); } //Handle Error
+                }
+
+                console.scprintln("LAT NS = ", &[gps.nmea.lat_ns]);
+
+                match nfmt::i32_to_ns(gps.nmea.long_deg) {
+                    Ok(s) => { console.scprintln("LONG DD = ", &s);}
+                    Err(_e) => { console.sprintln("ERROR!"); } //Handle Error
+                }
+
+                match nfmt::i32_to_ns(gps.nmea.long_min) {
+                    Ok(s) => { console.scprintln("LONG MMmm = ", &s);}
+                    Err(_e) => { console.sprintln("ERROR!"); } //Handle Error
+                }
+
+                console.scprintln("LAT NS = ", &[gps.nmea.long_we]);
+
+                match nfmt::i32_to_ns(gps.nmea.alt) {
+                    Ok(s) => { console.scprintln("ALT = ", &s);}
+                    Err(_e) => { console.sprintln("ERROR!"); } //Handle Error
                 }
             }
             Err(_e) => { 
                 // Handle error here
+                console.sprintln("[gps] - Ignoring packet!");
+                gps.clear_errors();
             }
         }
-
-        //console.scprintln("UTC = ", &utc);
-        //console.scprintln("LAT = ", &lat);
-        //console.scprintln("LONG = ", &long);
-        //console.scprintln("ALT = ", &alt);
         
-        //console.scprintln("ST = ", &nfmt::u32_to_string(get_stime()));
-        /* */
+        match nfmt::i32_to_ns(get_stime() as i32) {
+            Ok(s) => { console.scprintln("ST = ", &s);}
+            Err(_e) => { console.sprintln("ST ERROR!"); } //Handle Error
+        }
+
     }
 }
 

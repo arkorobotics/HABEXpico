@@ -29,6 +29,12 @@
     We recommend installing the precompiled binaries to '/usr/local/opt'. 
 	Add the bin folders (i.e. - /usr/local/opt/gnu-mcu-eclipse/openocd/0.10.0-12-20190422-2015/bin) to your environments variable 'PATH'.
 
+    Check to make sure the custom build of OpenOCD is selected:
+    ```
+    $ which openocd
+    /usr/local/opt/gnu-mcu-eclipse/openocd/0.10.0-12-20190422-2015/bin/openocd
+    ```
+
 5. Install GDB Dashboard (OPTIONAL)
 
 	https://github.com/cyrus-and/gdb-dashboard
@@ -81,11 +87,18 @@ b) The target is powered and the debugger is completely disconnected from the de
     >>> dashboard -output /dev/ttys001
     ```
 
-## Flash and Debug using VSCode
+## Flash and Debug using VSCode (Preferred)
 
 1. Open HABEXpico/Firmware folder in VSCode
 
 2. Run->Start Debugging (F5)
+
+3. Issues?
+    Check to make sure the custom build of OpenOCD is selected:
+    ```
+    $ which openocd
+    /usr/local/opt/gnu-mcu-eclipse/openocd/0.10.0-12-20190422-2015/bin/openocd
+    ```
 
 ## Flash-only using St-Flash
 

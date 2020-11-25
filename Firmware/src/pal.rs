@@ -37,7 +37,7 @@ impl PAL {
             .USART2
             .usart(debug_tx_pin, debug_rx_pin, 
                 serial::Config {
-                    baudrate: 9_600_u32.bps(),
+                    baudrate: 115_200_u32.bps(),
                     wordlength: serial::WordLength::DataBits8,
                     parity: serial::Parity::ParityNone,
                     stopbits: serial::StopBits::STOP1,

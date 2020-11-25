@@ -29,57 +29,60 @@ impl<'a> GPS<'a> {
 
     pub fn init(&mut self) -> () {
         let _gps_err = self.gps_en.set_low();
+        self.gps_rx.clear_errors();
+    }
 
-        // Try adding:
-        // self.gps_rx.clear_errors();
+    pub fn clear_errors(&mut self) -> (){
+        self.gps_rx.clear_errors();
     }
 
     pub fn read_char(&mut self) -> char {
-        return block!(self.gps_rx.read()).unwrap() as char;
+        match block!(self.gps_rx.read()) {
+            Ok(s) => { 
+                return s as char; 
+            }
+            Err(_e) => { 
+                // Clear any UART errors
+                self.gps_rx.clear_errors();
+                return 0 as char; 
+            }
+        }
     }
 
     #[allow(dead_code)]
+    /// Read GPS UART interface and update the NMEA struct
     pub fn get_packet(&mut self) -> Result<(), habex::Ecode> {
 
         let mut packet: [char; 100] = [0 as char; 100];
         let mut gga_valid: u8 = 0;
 
-        // Clear buffer
-        for i in 0..100 {
-            packet[i] = 0 as char;
-        }
-        
-        // 
+        // Look for valid $GNGGA header
         while gga_valid == 0 {
-
-            // Clear any UART errors. 
-            // TODO: This is not good practice. Future builds should include error checking and resolving.
-            self.gps_rx.clear_errors();
 
             // Sync to start delimiter "$" (0x24)
             while packet[0] != '$' {
                 packet[0] = self.read_char();
             }
 
+            // Read the header
             packet[1] = self.read_char();
             packet[2] = self.read_char();
             packet[3] = self.read_char();
             packet[4] = self.read_char();
             
-            // Look for "$xxGG"
-            // This is a time sensitive if-statement. If the program spends too much time checking
-            // for the correct characters, it will miss the remaining characters and crash.
-            // TODO: Resolve the time sensitive if-statement bug mentioned above.
-            if (packet[3] == 'G') && (packet[4] == 'G'){
+            // Look for "$xxGGx"
+            if (packet[3] == 'G') && (packet[4] == 'G') {
                 gga_valid = 1;
             }
         }
 
+        // Quickly buffer the remaining characters
         for i in 5..100 {
             packet[i] = self.read_char();
             if packet[i] == '\n' { break; }
         }
 
+        // Parse the $GNGGA packet
         match self.nmea.parse_gga_packet_to_nmea(packet) {
             Ok(_s) => {
                 return Ok(());
