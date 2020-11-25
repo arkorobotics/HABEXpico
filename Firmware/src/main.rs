@@ -24,7 +24,7 @@ mod power;
 mod radio;
 
 static TIMER: Mutex<RefCell<Option<Timer<pac::TIM2>>>> = Mutex::new(RefCell::new(None));
-static ST: Mutex<RefCell<Option<u32>>> = Mutex::new(RefCell::new(None));
+static ST: Mutex<RefCell<Option<i32>>> = Mutex::new(RefCell::new(None));
 
 #[entry]
 fn main() -> ! {
@@ -56,7 +56,7 @@ fn main() -> ! {
 
     timer.listen();
     
-    let mut stime: u32 = 0;
+    let mut stime: i32 = 0;
     stime = stime + 1;          // Start time at 1. Any time value less than 1 means there was an error.
 
     unsafe { NVIC::unmask(Interrupt::TIM2); }  // Enable the timer interrupt in the NVIC.
@@ -129,8 +129,8 @@ fn main() -> ! {
 }
 
 #[allow(dead_code)]
-fn get_stime() -> u32 {
-    let mut current_time: u32 = 0;
+fn get_stime() -> i32 {
+    let mut current_time: i32 = 0;
     cortex_m::interrupt::free(|cs| {
         if let Some(ref mut stime) = ST.borrow(cs).borrow_mut().deref_mut() {    
             current_time = *stime;
@@ -148,7 +148,12 @@ fn TIM2() {
             timer.clear_irq();
 
             if let Some(ref mut st) = ST.borrow(cs).borrow_mut().deref_mut() {
-                *st = *st + 1;
+                if *st >= 2147483646 {
+                    *st = 0;
+                }
+                else {
+                    *st = *st + 1;
+                }
             }
         }
     });
