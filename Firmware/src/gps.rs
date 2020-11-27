@@ -59,6 +59,13 @@ impl<'a> GPS<'a> {
         // Look for valid $GNGGA header
         while gga_valid == 0 {
 
+            // Clear header buffer
+            packet[0] = 0 as char;
+            packet[1] = 0 as char;
+            packet[2] = 0 as char;
+            packet[3] = 0 as char;
+            packet[4] = 0 as char;
+
             // Sync to start delimiter "$" (0x24)
             while packet[0] != '$' {
                 packet[0] = self.read_char();

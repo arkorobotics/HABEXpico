@@ -17,7 +17,7 @@
     $ sudo apt-get install gcc-arm-none-eabi
     ```
 
-3. Install STLink Tool (>=v1.5.1)
+3. Install STLink Tool (>=v1.5.1 && <=v1.6.0)
 
 	https://github.com/texane/stlink
 
